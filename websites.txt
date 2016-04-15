@@ -1,0 +1,1 @@
+https://askubuntu.com/questions/16728/hide-current-working-directory-in-terminal
