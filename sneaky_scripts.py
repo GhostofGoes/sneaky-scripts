@@ -19,13 +19,16 @@ from tqdm import tqdm
 import requests
 # from subprocess import Popen
 
+
 system = platform.system()
 version = platform.release()
 bits = platform.architecture()[0]  # Architecture
 
 
+# TODO: use pywinauto to interact with Ninite
 def windows(apps):
-
+    from pywinauto import application
+    app = application.Application()
     # TODO: exception handling
     # Download our apps
     for app in apps:
@@ -43,6 +46,10 @@ def windows(apps):
         print("Installing %s..." % app["name"])
         os.execl(os.getcwd() + app["name"])
         print("Installed %s!" % app["name"])
+
+
+def build_ninite_installer():
+    pass
 
 
 # TODO: linux setup
