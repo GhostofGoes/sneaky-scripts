@@ -1,7 +1,21 @@
 # Introduction
 A collection of scripts I use for setting up my environment and doing day-to-day tasks.
 
-# Requirements
+# Terminal Environment Setup
+
+Linux
+```
+cd ./sneaky-scripts
+./setup.sh
+```
+
+Windows
+```
+cd ./sneaky-scripts
+./setup.ps1
+```
+
+# Full System Setup
 
 ## Software
 * Python 3 (64-bit for a 64-bit system)
@@ -13,6 +27,6 @@ A collection of scripts I use for setting up my environment and doing day-to-day
 * requests (python might already have this)
 
 # License
-Licenced under the MIT licence. (See LICENSE file for details)
-Feel free adapt for your own purposes. 
+Licensed under the MIT licence. (See LICENSE file for details)
+Feel free adapt for your own purposes, or just copy and go.
 If you want to cite me, I'd appreciate it :)
