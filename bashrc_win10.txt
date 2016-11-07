@@ -1,0 +1,10 @@
+alias ll='ls -lAF'
+alias la='ls -lA'
+alias l='ls -CF'
+
+alias su='sudo su'
+alias up='cd ..'
+alias home='cd ~/'
+alias update='sudo apt update && sudo apt upgrade'
+
+export PS1="bash$ "
