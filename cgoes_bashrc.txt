@@ -1,3 +1,5 @@
+
+
 alias update="sudo apt-get -y update && sudo apt-get upgrade"
 alias dist-update="sudo apt-get -y update && sudo apt-get dist-upgrade"
 alias root="sudo su"
@@ -6,3 +8,6 @@ alias la="ls -la"
 alias home="cd ~/ && ls"
 alias shutdown="sudo shutdown -P now"
 alias reboot="sudo shutdown -r now"
+
+PS1="\u$ "
+

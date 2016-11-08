@@ -22,6 +22,10 @@ Full list of apps to install and configure is in apps.md
 * Settings (synced?)
 * Themes (synced?)
 
+Configure both to pin to taskbar and start with the same settings.
+
+https://github.com/Infinidat/infi.docopt_completion
+
 
 # Settings
 * Remote desktop / Remote assistance
