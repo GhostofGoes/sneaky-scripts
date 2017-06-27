@@ -8,6 +8,9 @@
 Open in useful directory, keyboard shortcut (CTRL+ALT+C), admin, text color
 
 ## Bash for Windows
+* Autoinstall and setup lsxss (the Windows Linux subsystem)
+* Inject the .bashrc file
+* Put a shortcut on taskbar, configured how I want for colors, fontsize, and such (have some parity with cmd/PowerShell except for colors)
 
 ## Bash on Ubuntu
 
@@ -34,7 +37,16 @@ https://github.com/Infinidat/infi.docopt_completion
 * Crash dump
 * Services
 * Network settings: Disable IPv6, discover responder, file sharing
+* Firewall
+* Security settings
 
 
 # Important areas
 * Disable things on startup
+
+
+# Resources
+
+* Windows hardening powershell scripts
+* Linux hardening bash scripts
+* Configuration scripts/codes

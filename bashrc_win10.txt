@@ -1,10 +1,25 @@
-alias ll='ls -lAF'
-alias la='ls -lA'
-alias l='ls -CF'
 
 alias su='sudo su'
 alias up='cd ..'
 alias home='cd ~/'
 alias update='sudo apt update && sudo apt upgrade'
 
-export PS1="bash$ "
+export PS1="bash$ "  # Sets terminal prompt
+alias mkdir='mkdir -pv'  # Creates parent directories if needed
+alias grep='grep --color=auto'  # Colorize grep command output
+
+alias cd..='cd ..'
+alias l.='ls -d .* --color=auto'
+alias ll='ls -lAF --color=auto'
+alias la='ls -lA --color=auto'
+alias l='ls -CF --color=auto'
+
+alias hist='history'
+alias jobs='jobs -l'
+alias path='echo -e ${PATH//:/\\n}'
+
+alias now='date +"%T"'
+alias nowtime=now
+alias nowdate='date +"%d-%m-%Y"'
+
+alias ports='netstat -tulanp'

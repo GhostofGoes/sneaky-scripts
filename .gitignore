@@ -1,3 +1,8 @@
-**/.idea
-**/.vsc
-**/.vagrant
+.idea
+.vscode
+.vsc
+.vagrant
+*.log
+*.out
+*.pyc
+__pycache__
