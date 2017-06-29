@@ -1,0 +1,6 @@
+
+
+alias update="sudo apt-get -y update && sudo apt-get upgrade"
+alias dist-update="sudo apt-get -y update && sudo apt-get dist-upgrade"
+
+

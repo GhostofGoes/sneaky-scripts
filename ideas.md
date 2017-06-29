@@ -1,11 +1,20 @@
 
-# Shells
+# Initial loading
+
+Publish releases with zipped versions of each OS's folders. So all I have to do is download the release .zip/.tar.gz file, uncompress it, and run the requisite install script (.ps1/.sh/.whatever). The releases zip: base files from top level, platform folders.
+
+Platform specific install scripts could download and install Python, pip install dependancies, then run it.
+
+# Shell customizations
 
 ## CMD
  open in useful directory, keyboard shortcut (CTRL+ALT+C), admin, text color
 
 ## Powershell
 Open in useful directory, keyboard shortcut (CTRL+ALT+C), admin, text color
+
+## Bash
+Have base bash dotfiles that will work across platforms, then combine with the platform-specific dotfiles.
 
 ## Bash for Windows
 * Autoinstall and setup lsxss (the Windows Linux subsystem)
@@ -15,6 +24,8 @@ Open in useful directory, keyboard shortcut (CTRL+ALT+C), admin, text color
 ## Bash on Ubuntu
 
 ## Bash on CentOS/RHEL
+
+
 
 
 # Apps
