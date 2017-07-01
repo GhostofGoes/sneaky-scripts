@@ -16,6 +16,8 @@ Open in useful directory, keyboard shortcut (CTRL+ALT+C), admin, text color
 ## Bash
 Have base bash dotfiles that will work across platforms, then combine with the platform-specific dotfiles.
 
+Use GNU Stow to instal the dotfiles?
+
 ## Bash for Windows
 * Autoinstall and setup lsxss (the Windows Linux subsystem)
 * Inject the .bashrc file
