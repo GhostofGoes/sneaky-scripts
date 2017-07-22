@@ -1,0 +1,5 @@
+include sneaky/scripts/*
+include apps.json
+include README.md
+include LICENSE
+include requirements.txt

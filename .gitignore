@@ -6,3 +6,6 @@
 *.out
 *.pyc
 __pycache__
+build/
+dist/
+sneaky_scripts.egg-info/
