@@ -24,7 +24,7 @@ setup(
     packages=['sneaky'],
     # scripts=['sneaky/'],
     include_package_data=True,
-    keywords='sneaky scripts windows rhel debian automation bash etc etc',  # SEO YO
+    keywords='sneaky scripts windows rhel debian automation bash dotfiles etc etc',  # SEO YO
     zip_safe=False,
     install_requires=REQUIRED,
     classifiers=[  # PyPI SEO!
@@ -40,7 +40,6 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Operating System :: Microsoft :: Windows',
         'Operating System :: POSIX :: Linux',
-        'Operating System :: MacOS', # Someday...
         'Natural Language :: English',
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators',
@@ -50,10 +49,10 @@ setup(
         'Topic :: System :: Installation/Setup',
         'Topic :: Utilities'
     ],
-    platforms=['Windows', 'Linux', 'Mac OS-X'],
+    platforms=['Windows', 'Linux'],
     entry_points={
         'console_scripts': [
-            'sneaky-scripts = sneaky.sneaky_scripts:main'
+            'sneaky = sneaky.sneaky_scripts:main'
         ]
     }
 )
