@@ -5,6 +5,7 @@ from setuptools import setup
 
 from sneaky.sneaky_scripts import __version__
 
+
 with open('requirements.txt') as f:
     REQUIRED = f.read().splitlines()
 

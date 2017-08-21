@@ -54,6 +54,10 @@ class BasePlatform:
         with subprocess.Popen(shlex.split(command_line)) as proc:
             logging.debug(proc.stdout.read())
 
+    def run_command(self, command):
+        with subprocess.Popen(shlex.split(command)) as proc:
+            logging.debug(proc.stdout.read())
+
     def __repr__(self):
         return "%s(%s)" % (self.__class__, str([x for x in self.args]))
 
