@@ -41,7 +41,7 @@ class Windows(BasePlatform):
         for app in self.apps:
             # TODO: do these in sub-processes
             self._log.info("Starting download of %s", app["name"])
-            utils.download_exe(url=app["url"], filename=app["name"], extension=".exe")
+            utils.download_file(url=app["url"], filename=app["name"], extension=".exe")
             self._log.info("Finished downloading %s", app["name"])
 
         # Install our apps

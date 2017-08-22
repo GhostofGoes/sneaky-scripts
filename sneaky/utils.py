@@ -10,8 +10,9 @@ import requests
 
 
 # Source: https://stackoverflow.com/a/37573701/2214380
-def download_exe(url, filename, extension=""):
+def download_file(url, filename, extension=""):
     """
+    Download a file from the Internet.
 
     :param str url: URL to retrieve from
     :param str filename: Name of the file to be created
@@ -81,31 +82,6 @@ def read_json(filename):
         logging.critical("Could not open JSON file '%s': %s",
                          filename, str(message))
         return None
-
-
-def user_input(prompt, obj_name, func):
-    """
-    Continually prompts a user for input until the specified object is found.
-    :param str prompt: Prompt to bother user with
-    :param str obj_name: Name of the type of the object that we seek
-    :param func: The function that shalt be called to discover the object
-    :return: The discovered object and it's human name
-    :rtype: tuple(vimtype, str)
-    """
-    while True:
-        try:
-            item_name = str(input(prompt))
-        except KeyboardInterrupt:
-            print()
-            logging.info("Exiting...")
-            sys.exit(0)
-        item = func(item_name)
-        if item:
-            logging.info("Found %s: %s", obj_name, item.name)
-            return item, item_name
-        else:
-            print("Couldn't find a %s with name %s. Perhaps try another? "
-                  % (obj_name, item_name))
 
 
 # Based on: http://code.activestate.com/recipes/577058/
