@@ -18,7 +18,7 @@ class BasePlatform:
         """
         :param dict args: Commandline arguments parsed by docopt
         """
-        self._log = logging.getLogger(self.__class__)
+        self._log = logging.getLogger(str(self.__class__))
         self.args = args
 
         self.system = platform.system()  # Windows or Linux
