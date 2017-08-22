@@ -31,7 +31,10 @@ class BasePlatform:
         self.dir_path = os.path.dirname(os.path.realpath(__file__))
         self._log.debug("dir_path: %s", str(self.dir_path))
 
-        config = utils.read_json(args["--config"])
+        if args["--config"]:
+            config = utils.read_json(args["--config"])
+        else:
+            config = utils.read_json(self.resolve_file("sneaky_config.json"))
 
         # Pull config for the platform. Yes, there will be duplication of settings.
         self.config = config[self.system.lower()]
@@ -56,7 +59,7 @@ class BasePlatform:
         :return: Absolute Path to the file/directory
         :rtype: str
         """
-        return os.path.join(self.dir_path, "resources/%s" % filename)
+        return os.path.join(self.dir_path, "resources", filename)
 
     def get_os_script(self, script_name):
         """

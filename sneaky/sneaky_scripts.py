@@ -9,7 +9,7 @@ Usage:
     sneaky [options]
 
 Options:
-    -f, --config FILE   Configuration file to use [default: sneaky_config.json]
+    -f, --config FILE   Configuration file to use
     -v, --verbose       Debugging output to terminal [default: False]
     -q, --quiet         Don't "print" to terminal [default: False]
     -h, --help          Show this screen
@@ -29,7 +29,7 @@ from docopt import docopt
 import sneaky.utils as utils
 
 
-__version__ = "0.3.2"
+__version__ = "0.3.4"
 
 
 def main():
