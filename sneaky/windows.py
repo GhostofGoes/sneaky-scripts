@@ -56,8 +56,9 @@ class Windows(BasePlatform):
             os.remove(app["name"] + ".exe")
             self._log.debug("Deleted downloaded installer for app %s", app["name"])
 
-        # Jump back to where we were originally
-        os.chdir(current_dir)
+        # Reset
+        os.chdir(current_dir)  # Jump back to where we were originally
+        os.rmdir(temp_dir)  # Cleanup the temp dir
 
     def build_ninite_installer(self):
         # TODO: use pywinauto to interact with Ninite

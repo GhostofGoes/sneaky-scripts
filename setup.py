@@ -15,7 +15,7 @@ with open('README.md') as f:
 setup(
     name='sneaky-scripts',
     version=__version__,
-    description='Automated setup of development environments. Definitely not a vagrant clone. ;)',
+    description='Automated setup and configuration of your developer environment',
     long_description=README,
     url='https://github.com/GhostofGoes/sneaky-scripts',
     download_url='https://pypi.python.org/pypi/sneaky-scripts',

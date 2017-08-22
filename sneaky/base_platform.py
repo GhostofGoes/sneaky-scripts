@@ -12,8 +12,13 @@ import sneaky.utils as utils
 
 
 class BasePlatform:
+    """Base class from which platform-specific classes derive."""
 
     def __init__(self, args):
+        """
+        :param dict args: Commandline arguments parsed by docopt
+        """
+
         self._log = logging.getLogger(self.__class__)
         self.args = args
 
@@ -39,23 +44,26 @@ class BasePlatform:
         self.apps = self.config["apps"]
 
     def configure(self):
-        pass
+        pass  # Override me!
 
     # Source: https://github.com/pminkov/kubeutils/
-    def resolve_file(self, script_name):
-        return os.path.join(self.dir_path, "scripts/%s" % script_name)
+    def resolve_file(self, filename):
+        return os.path.join(self.dir_path, "resources/%s" % filename)
 
     def get_os_script(self, script_name):
         return self.resolve_file(self.dist + "/" + script_name)
 
+    def resolve_dotfile(self, dotfile):
+        return self.resolve_file("dotfiles/" + dotfile)
+
     def run_script(self, script, args=""):
         command_line = self.get_os_script(script) + " " + args
         with subprocess.Popen(shlex.split(command_line)) as proc:
-            logging.debug(proc.stdout.read())
+            self._log.debug(proc.stdout.read())
 
     def run_command(self, command):
         with subprocess.Popen(shlex.split(command)) as proc:
-            logging.debug(proc.stdout.read())
+            self._log.debug(proc.stdout.read())
 
     def __repr__(self):
         return "%s(%s)" % (self.__class__, str([x for x in self.args]))
