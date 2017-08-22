@@ -3,7 +3,7 @@
 
 from setuptools import setup
 
-__version__ = "0.3.6"
+from sneaky import __version__
 
 
 with open('requirements.txt') as f:
