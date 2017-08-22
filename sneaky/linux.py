@@ -7,9 +7,6 @@ import logging
 import subprocess
 import shlex
 
-from tqdm import tqdm
-import requests
-
 from sneaky.base_platform import BasePlatform
 
 

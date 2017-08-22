@@ -5,6 +5,25 @@
 import logging
 import sys
 
+from tqdm import tqdm
+import requests
+
+
+# Source: https://stackoverflow.com/a/37573701/2214380
+def download_exe(url, filename, extension=""):
+    """
+
+    :param str url: URL to retrieve from
+    :param str filename: Name of the file to be created
+    :param str extension: Extension of the file
+    """
+    download = requests.get(url, stream=True)
+    total_size = int(download.headers.get("content-length", 0))
+    with open(filename + extension, "wb") as handle:
+        for data in tqdm(download.iter_content(), total=total_size,
+                         unit='B', unit_scale=True):
+            handle.write(data)
+
 
 def setup_logging(verbose=False, log_file='sneaky_scripts.log'):
     """

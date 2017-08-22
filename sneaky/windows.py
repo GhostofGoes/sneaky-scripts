@@ -2,15 +2,13 @@
 
 import os
 import sys
-import platform
 import logging
 import subprocess
 import shlex
-
-from tqdm import tqdm
-import requests
+import tempfile
 
 from sneaky.base_platform import BasePlatform
+import sneaky.utils as utils
 
 
 class Windows(BasePlatform):
@@ -33,26 +31,33 @@ class Windows(BasePlatform):
         # TODO: exception handling
 
     def install_apps(self):
+
+        # Create temporary directory for downloading and running installers
+        current_dir = os.getcwd()  # Save current directory
+        temp_dir = tempfile.mkdtemp(suffix='sneaky-')
+        os.chdir(temp_dir)  # Change to the temporary directory
+
         # Download our apps
         for app in self.apps:
-            self._log.info("Starting download of %s." % app["name"])
-            download = requests.get(app["url"], stream=True)
-            # exe = os.path.basename(app["url"])
             # TODO: do these in sub-processes
-
-            # Source: https://stackoverflow.com/a/37573701/2214380
-            total_size = int(download.headers.get('content-length', 0))
-            with open(app["name"], "wb") as handle:
-                for data in tqdm(download.iter_content(), total=total_size,
-                                 unit='B', unit_scale=True):
-                    handle.write(data)
-            self._log.info("Finished downloading %s" % app["name"])
+            self._log.info("Starting download of %s", app["name"])
+            utils.download_exe(url=app["url"], filename=app["name"], extension=".exe")
+            self._log.info("Finished downloading %s", app["name"])
 
         # Install our apps
         for app in self.apps:
-            self._log.info("Installing %s..." % app["name"])
+            self._log.info("Installing %s...", app["name"])
             os.execl(os.getcwd() + app["name"])
-            self._log.info("Installed %s!" % app["name"])
+            self._log.info("Installed %s!", app["name"])
+
+        # Cleanup our apps
+        for app in self.apps:
+            self._log.debug("Deleting downloaded installer for app %s...", app["name"])
+            os.remove(app["name"] + ".exe")
+            self._log.debug("Deleted downloaded installer for app %s", app["name"])
+
+        # Jump back to where we were originally
+        os.chdir(current_dir)
 
     def build_ninite_installer(self):
         # TODO: use pywinauto to interact with Ninite
