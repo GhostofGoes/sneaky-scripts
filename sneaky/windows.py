@@ -63,3 +63,6 @@ class Windows(BasePlatform):
     def build_ninite_installer(self):
         # TODO: use pywinauto to interact with Ninite
         base_url = "https://ninite.com/"
+
+    def configure_proxy(self):
+        pass  # TODO: implement

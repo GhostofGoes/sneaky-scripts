@@ -32,9 +32,6 @@ import sneaky.utils as utils
 __version__ = "0.3.1"
 
 
-# TODO: proxy configuration
-# TODO: system configuration
-# Logging code stolen from this awesome person: https://github.com/GhostofGoes/ADLES
 def main():
     args = docopt(__doc__, version='Sneaky Scripts ' + __version__)
 

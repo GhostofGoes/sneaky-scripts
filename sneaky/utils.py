@@ -26,6 +26,7 @@ def download_file(url, filename, extension=""):
             handle.write(data)
 
 
+# Logging code stolen from this awesome person: https://github.com/GhostofGoes/ADLES
 def setup_logging(verbose=False, log_file='sneaky_scripts.log'):
     """
     :param verbose:

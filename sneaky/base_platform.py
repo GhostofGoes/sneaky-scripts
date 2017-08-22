@@ -18,7 +18,6 @@ class BasePlatform:
         """
         :param dict args: Commandline arguments parsed by docopt
         """
-
         self._log = logging.getLogger(self.__class__)
         self.args = args
 
@@ -46,22 +45,52 @@ class BasePlatform:
     def configure(self):
         pass  # Override me!
 
+    def configure_proxy(self):
+        pass  # Override me!
+
     # Source: https://github.com/pminkov/kubeutils/
     def resolve_file(self, filename):
+        """
+        Resolves the path to a file or directory in resources/
+        :param str filename: Name of file/directory to resolve
+        :return: Absolute Path to the file/directory
+        :rtype: str
+        """
         return os.path.join(self.dir_path, "resources/%s" % filename)
 
     def get_os_script(self, script_name):
+        """
+        Resolves the path to a script for the named OS
+        :param str script_name: Name of the script to resolve path of
+        :return: Absolute Path to the script
+        :rtype: str
+        """
         return self.resolve_file(self.dist + "/" + script_name)
 
     def resolve_dotfile(self, dotfile):
+        """
+        Resolves the path to a dotfile
+        :param str dotfile: Name of the dotfile to resolve path of
+        :return: Absolute Path to the dotfile
+        :rtype: str
+        """
         return self.resolve_file("dotfiles/" + dotfile)
 
     def run_script(self, script, args=""):
+        """
+        Runs the specified script with arguments, based on OS of the class
+        :param str script: Name of the script to run
+        :param str args: Arguments to provide the script with
+        """
         command_line = self.get_os_script(script) + " " + args
         with subprocess.Popen(shlex.split(command_line)) as proc:
             self._log.debug(proc.stdout.read())
 
     def run_command(self, command):
+        """
+        Executes a command in a subprocess
+        :param str command: Command to run, including arguments
+        """
         with subprocess.Popen(shlex.split(command)) as proc:
             self._log.debug(proc.stdout.read())
 

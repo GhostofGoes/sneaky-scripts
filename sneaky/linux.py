@@ -4,8 +4,6 @@ import os
 import sys
 import platform
 import logging
-import subprocess
-import shlex
 import shutil
 
 from sneaky.base_platform import BasePlatform
@@ -45,6 +43,9 @@ class Linux(BasePlatform):
             else:
                 self.run_command("sudo apt-get -y install " + key)
 
+    def configure_packages(self):
+        pass  # TODO
+
     def install_dotfiles(self):
         self._log.info("Installing dotfiles...")
         for key, value in self.config["dotfiles"].values():
@@ -52,6 +53,11 @@ class Linux(BasePlatform):
         self._log.info("Finished installing dotfiles")
 
     def place_dotfile(self, name, config):
+        """
+        Places a dotfile in the directory it is destined for.
+        :param str name: Name of the dotfile
+        :param dict config: Configuration of the dotfile
+        """
         # TODO: allow configuration of special permissions, if needed
         source_loc = self.resolve_dotfile(name)
         install_loc = config["location"]  # Directory to install in
@@ -87,5 +93,5 @@ class Linux(BasePlatform):
 
         # TODO: document config syntax
 
-    def configure_packages(self):
-        pass  # TODO
+    def configure_proxy(self):
+        pass  # TODO: implement
