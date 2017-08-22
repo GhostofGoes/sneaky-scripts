@@ -68,7 +68,7 @@ class BasePlatform:
         :return: Absolute Path to the script
         :rtype: str
         """
-        return self.resolve_file(self.dist + "/" + script_name)
+        return self.resolve_file(os.path.join(self.dist, script_name))
 
     def resolve_dotfile(self, dotfile):
         """
@@ -77,7 +77,7 @@ class BasePlatform:
         :return: Absolute Path to the dotfile
         :rtype: str
         """
-        return self.resolve_file("dotfiles/" + dotfile)
+        return self.resolve_file(os.path.join("dotfiles", dotfile))
 
     def run_script(self, script, args=""):
         """
