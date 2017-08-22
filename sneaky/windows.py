@@ -19,6 +19,9 @@ class Windows(BasePlatform):
         self.script_path = 'scripts/windows'
         self.dist = "windows"
 
+        # Each application will be a dict with configuration for that app
+        self.apps = self.config["apps"]
+
     def configure(self):
         is_win10 = bool(self.version[0:1] == "10")
         if is_win10:

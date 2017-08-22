@@ -41,9 +41,6 @@ class BasePlatform:
         # Is there a proxy?
         self.proxy = config["proxy"] if "proxy" in config else None
 
-        # Each application will be a dict with configuration for that app
-        self.apps = self.config["apps"]
-
     def configure(self):
         pass  # Override me!
 
