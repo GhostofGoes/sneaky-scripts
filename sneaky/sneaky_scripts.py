@@ -12,6 +12,7 @@ Options:
     -f, --config FILE   Configuration file to use
     -v, --verbose       Debugging output to terminal [default: False]
     -q, --quiet         Don't "print" to terminal [default: False]
+    --skip-config       Skip the "configure" step (used for testing) [default: False]
     -h, --help          Show this screen
     --version           Show version
 
@@ -54,7 +55,9 @@ def main():
         sys.exit(1)
 
     print(utils.startup_text)
-    system.configure()
+
+    if not args["--skip-config"]:
+        system.configure()
 
 
 if __name__ == '__main__':

@@ -9,11 +9,11 @@ python:
 install:
   - 'python setup.py install'
 script:
-  - sneaky
   - sneaky -h
   - sneaky --help
   - sneaky --version
-  - sneaky --verbose
+  - sneaky --skip-config
+  - sneaky --verbose --skip-config
 
 notifications:
   email:
