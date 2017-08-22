@@ -27,9 +27,7 @@ import logging
 from docopt import docopt
 
 import sneaky.utils as utils
-
-
-__version__ = "0.3.5"
+from setup import __version__
 
 
 def main():
