@@ -23,7 +23,6 @@ setup(
     author_email='goesc@acm.org',
     license='MIT',
     packages=['sneaky'],
-    # scripts=['sneaky/'],
     include_package_data=True,
     keywords='sneaky scripts windows rhel debian automation bash dotfiles etc etc',  # SEO YO
     zip_safe=False,
