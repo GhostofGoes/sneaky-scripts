@@ -7,8 +7,10 @@ A collection of scripts I use for setting up my environment and doing day-to-day
 
 ```bash
 pip install sneaky
-senaky --config sneaky-config.json
+senaky --help
 ```
+
+See `resources/sneaky_config.json` for examples on configuration. Full syntax is coming soon.
 
 
 # License

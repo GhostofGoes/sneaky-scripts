@@ -56,7 +56,6 @@ def main():
         sys.exit(1)
 
     print(utils.startup_text)
-    print(str(system))
     system.configure()
 
 
