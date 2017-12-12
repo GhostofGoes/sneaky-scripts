@@ -1,4 +1,4 @@
-include sneaky/scripts/*
+include sneaky/resources/*
 include apps.json
 include README.md
 include LICENSE
