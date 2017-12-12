@@ -1,5 +1,0 @@
-docopt
-tqdm
-requests
-pywinauto
-colorlog
