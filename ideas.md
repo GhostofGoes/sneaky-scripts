@@ -1,7 +1,7 @@
 # Misc. TODO
 * PyPI upload
 * More travis platforms
-
+* Make note in readme about configuring Win10.ps1
 
 # Initial loading
 
