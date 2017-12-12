@@ -2,20 +2,15 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup
-
 from sneaky import __version__
 
-
-with open('requirements.txt') as f:
-    REQUIRED = f.read().splitlines()
-
-with open('README.md') as f:
+with open('README.rst') as f:
     README = f.read()
 
 setup(
     name='sneaky-scripts',
     version=__version__,
-    description='Automated setup and configuration of your developer environment',
+    description='Automated setup and configuration of your system environment',
     long_description=README,
     url='https://github.com/GhostofGoes/sneaky-scripts',
     download_url='https://pypi.python.org/pypi/sneaky-scripts',
@@ -24,9 +19,20 @@ setup(
     license='MIT',
     packages=['sneaky'],
     include_package_data=True,
-    keywords='sneaky scripts windows rhel debian automation bash dotfiles etc etc',  # SEO YO
+    keywords='sneaky scripts windows linux ubuntu centos rhel kali debian '
+             'automation bash dotfiles python Goes to mice town',  # SEO YO
     zip_safe=False,
-    install_requires=REQUIRED,
+    install_requires=[
+        'docopt == 0.6.2',
+        'tqdm',
+        'requests >= 2.18.4',
+
+        'colorlog;platform_system=="Linux"',
+
+        'pywinauto;platform_system=="Windows"',
+        'colorlog[windows];platform_system=="Windows"',
+        # 'pywin32 >= 1.0;platform_system=="Windows"'
+    ],
     classifiers=[  # PyPI SEO!
         'Development Status :: 2 - Pre-Alpha',
         'Environment :: Console',

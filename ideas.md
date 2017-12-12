@@ -1,3 +1,7 @@
+# Misc. TODO
+* PyPI upload
+* More travis platforms
+
 
 # Initial loading
 
