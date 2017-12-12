@@ -1,5 +1,4 @@
 include sneaky/resources/*
 include apps.json
-include README.md
+include README.rst
 include LICENSE
-include requirements.txt
