@@ -1,0 +1,8 @@
+
+
+alias update="sudo yum update"
+
+
+# TODO: use colors + good current path
+# Sets terminal prompt
+export PS1="\u$ "

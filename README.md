@@ -7,24 +7,33 @@
 
 
 A collection of scripts I use for setting up my environment and doing day-to-day tasks.
+Uses native platform tools, namely PowerShell on Windows, and BASH on Linux.
 
 
-Usage
-=====
-
-```bash
-git clone https://github.com/ghostofgoes/sneaky-scripts
-cd sneaky-scripts
-pip install -e .
-sneaky --help
-```
-
-See `resources/sneaky_config.json` for examples on configuration. Full syntax is coming soon.
+If you want to download "LinkedIn" slideshares, there's also a thing for that.
 
 
-Works with Python 2.7, 3.4, 3.5, 3.6, probably 3.7 whenever that drops.
 
-Platforms
+# Usage
+
+
+* Download repo
+* Modify files in configs, if desired
+* Modify apps.json for the platform, if desired
+* Run the "sneaky" script for the platform
+
+Or copy the snippets you need. No need to do a full repo download. Your mileage may vary.
+
+See README in the directories for details.
+
+
+## Lazy option
+
+COMING SOON (???)
+(When I'm not lazy, the irony)
+
+
+# Platforms
 * Windows: 10
 * Ubuntu: 14, 16
 * Kali: 2017+
@@ -33,8 +42,6 @@ Platforms
 Others TBD as I start spinning up home testbed(s) in the next half-year.
 
 
-License
-=======
-
+# License
 Licensed under the MIT licence. (See LICENSE file for details)
 Feel free adapt for your own purposes, or just copy and go.

@@ -1,8 +1,4 @@
 
-
-# Sets terminal prompt
-export PS1="\u$ "
-
 # Niceities
 alias cd..="cd .."
 alias rm="rm -i"  # Interactive mode delete
