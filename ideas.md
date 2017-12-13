@@ -1,3 +1,10 @@
+# Misc.
+
+Chocolatey: https://chocolatey.org/
+Package manager for Windows.
+
+Create a package that runs the Win10.ps1 script.
+
 # Misc. TODO
 * PyPI upload
 * More travis platforms
