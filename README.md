@@ -1,7 +1,5 @@
 .. image:: https://badge.waffle.io/GhostofGoes/sneaky-scripts.svg?label=ready&title=Waffle.io
     :target: http://waffle.io/GhostofGoes/sneaky-scripts
-.. image:: https://travis-ci.org/GhostofGoes/sneaky-scripts.svg?branch=master
-    :target: https://travis-ci.org/GhostofGoes/sneaky-scripts
 .. image:: https://codeclimate.com/github/GhostofGoes/sneaky-scripts/badges/gpa.svg
     :target: https://codeclimate.com/github/GhostofGoes/sneaky-scripts
 
