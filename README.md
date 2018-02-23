@@ -1,9 +1,3 @@
-.. image:: https://badge.waffle.io/GhostofGoes/sneaky-scripts.svg?label=ready&title=Waffle.io
-    :target: http://waffle.io/GhostofGoes/sneaky-scripts
-.. image:: https://codeclimate.com/github/GhostofGoes/sneaky-scripts/badges/gpa.svg
-    :target: https://codeclimate.com/github/GhostofGoes/sneaky-scripts
-
-
 A collection of scripts I use for setting up my environment and doing day-to-day tasks.
 Uses native platform tools, namely PowerShell on Windows, and BASH on Linux.
 
