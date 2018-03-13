@@ -1,0 +1,131 @@
+# Windows 10
+
+RequireAdmin
+
+# Privacy Settings
+DisableTelemetry
+DisableWiFiSense
+# "DisableSmartScreen"
+DisableWebSearch
+DisableAppSuggestions
+DisableBackgroundApps
+DisableLockScreenSpotlight
+DisableLocationTracking
+DisableMapUpdates
+DisableFeedback
+DisableAdvertisingID
+DisableCortana
+DisableErrorReporting
+SetP2PUpdateLocal
+DisableAutoLogger
+DisableDiagTrack
+DisableWAPPush
+
+# Service Tweaks
+# SetUACLow
+# EnableSharingMappedDrives
+# DisableAdminShares
+DisableSMB1
+# SetCurrentNetworkPrivate
+# SetUnknownNetworksPrivate
+DisableNetDevicesAutoInst
+EnableCtrldFolderAccess
+# DisableFirewall
+# DisableDefender
+# DisableDefenderCloud
+# DisableUpdateMSRT
+# DisableUpdateDriver
+DisableUpdateRestart
+DisableHomeGroups
+DisableSharedExperiences
+DisableRemoteAssistance
+# EnableRemoteDesktop
+DisableAutoplay
+DisableAutorun
+EnableStorageSense
+# DisableDefragmentation
+# DisableSuperfetch
+# DisableIndexing
+# SetBIOSTimeUTC
+# EnableHibernation
+# DisableSleepButton
+# DisableSleepTimeout
+# DisableFastStartup
+
+# UI Tweaks
+# DisableActionCenter
+# DisableLockScreen
+# DisableLockScreenRS1
+# HideNetworkFromLockScreen
+# HideShutdownFromLockScreen
+DisableStickyKeys
+ShowTaskManagerDetails
+ShowFileOperationsDetails
+# EnableFileDeleteConfirm
+HideTaskbarSearchBox
+HideTaskView
+# ShowSmallTaskbarIcons
+# ShowTaskbarTitles
+HideTaskbarPeopleIcon
+# ShowTrayIcons
+ShowKnownExtensions
+ShowHiddenFiles
+# HideSyncNotifications
+# HideRecentShortcuts
+SetExplorerThisPC
+ShowThisPCOnDesktop
+ShowUserFolderOnDesktop
+# HideDesktopFromThisPC
+# HideDesktopFromExplorer
+# HideDocumentsFromThisPC
+# HideDocumentsFromExplorer
+# HideDownloadsFromThisPC
+# HideDownloadsFromExplorer
+HideMusicFromThisPC
+# HideMusicFromExplorer
+# HidePicturesFromThisPC
+# HidePicturesFromExplorer
+HideVideosFromThisPC
+# HideVideosFromExplorer
+Hide3DObjectsFromThisPC
+Hide3DObjectsFromExplorer
+# SetControlPanelViewIcons
+# SetVisualFXPerformance
+# DisableThumbnails
+# DisableThumbsDB
+# AddENKeyboard
+# EnableNumlock
+
+# Application Tweaks
+DisableOneDrive
+UninstallOneDrive
+UninstallMsftBloat
+UninstallThirdPartyBloat
+# UninstallWindowsStore
+# DisableXboxFeatures
+DisableAdobeFlash
+# UninstallMediaPlayer
+# UninstallWorkFolders
+InstallLinuxSubsystem
+# InstallHyperV
+SetPhotoViewerAssociation
+AddPhotoViewerOpenWith
+DisableSearchAppInStore
+# DisableNewAppPrompt
+# EnableF8BootMenu
+# SetDEPOptOut
+# EnableMeltdownCompatFlag
+
+# Server-specific
+# HideServerManagerOnLogin
+# DisableShutdownTracker
+# DisablePasswordPolicy
+# DisableCtrlAltDelLogin
+# DisableIEEnhancedSecurity
+
+# Unpinning
+UnpinStartMenuTiles
+UnpinTaskbarIcons
+
+# WaitForKey
+# Restart
