@@ -47,4 +47,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File choco.ps1
 # (New-Object System.Net.WebClient).DownloadString($win10_url, ".\Win10.ps1")
 # Write-Host "Finished downloading Win10.ps1"
 
-
+# Install Python packages
+Get-Content ..\python-packages.txt | ForEach-Object {
+    py -3 -m pip install --user $_
+}

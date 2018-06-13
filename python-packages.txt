@@ -1,0 +1,9 @@
+better_exceptions
+pylint
+Pygments
+requests
+colorlog
+scapy
+virtualenv
+setuptools
+twine
