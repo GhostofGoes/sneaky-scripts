@@ -29,6 +29,7 @@ $packages = @(
     'notepadplusplus.install',  # Notepad++
     'visualstudiocode',         # Visual Studio Code
     # 'sublimetext3',           # Sublime Text 3
+    'pycharm-community',
 
     # Browsers
     'googlechrome', # Google Chrome
@@ -42,6 +43,7 @@ $packages = @(
     'python3',  # Python programming language
     'python2',  # Old Python
     'golang',   # Go programming language
+    'miktex.install',  # LaTeX
 
     # Utilities
     'ccleaner',         # CCleaner - Windows cleaning tool
@@ -50,27 +52,36 @@ $packages = @(
     'procexp',          # Process Explorer
     'keepass.install',  # KeePass - password manager
     'greenshot',        # Light-weight screenshot tool
+    'qbittorrent',
+    'spotify',
+    'revo.uninstaller',
+    'cpu-z',
+    'veracrypt',
+    'ilspy',  # ILSpy is the open-source .NET assembly browser and decompiler
+    'signal',  # Secure messaging
 
     # Commandline tools
     'hub',         # GitHub hub (https://github.com/github/hub)
     'curl',        # curl command
     'wget',        # wget command
     'youtube-dl',  # Small command-line program to download videos from YouTube.com and a few more sites
+    'cmder',        # Terminal emulator
     
     # Viewers/Media
     'vlc',        # VLC media player
     'irfanview',  # IrfanView - Image viewer
 
-    # Virtualization
+    # Virtualization/Emulation
     'virtualbox',
     'vagrant',
+    'docker',
 
     # Network tools
     'putty.install',  # PuTTY - Telnet/SSH client
     'filezilla',      # FileZilla - FTP/SFTP client
     'winscp',         # WinSCP - SFTP/SCP/FTP client
     'wireshark',      # Wireshark - Packet capture and analysis
-    ''
+    'nmap'
 )
 
 # Install the specified packages
