@@ -7,3 +7,4 @@ scapy
 virtualenv
 setuptools
 twine
+pudb
