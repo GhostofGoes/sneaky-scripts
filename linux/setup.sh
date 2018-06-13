@@ -8,6 +8,7 @@ case $(uname) in
      command -v yum && { CENTOS=1; echo "yum detected, probably CentOS or RHEL"; return; }
      command -v zypper && { SUSE=1; echo "zypper detected, probably OpenSUSE"; return; }
      command -v apt-get && { DEBIAN=1; echo "apt-get detected, probably Debian"; return; }
+     command -v pkg && { FREEBSD=1; echo "pkg detected, probably FreeBSD"; return; }
      ;;
   Darwin )
      DARWIN=1
@@ -77,7 +78,8 @@ elif [ $DEBIAN ]; then
 elif [ $CENTOS ]; then
     echo "Running setup for CentOS. You masochist. "
     # Update package list and installed packages
-    sudo yum update -y -q 
+    yum check-update -y -q
+    sudo yum update -y -q
 
     # Add EPEL package repository
     sudo yum install -y -q epel-release
@@ -113,6 +115,14 @@ elif [ $SUSE ]; then
     # TODO: update packages
     # TODO: install packages
     # TODO: bash bashrc
+
+elif [ $FREEBSD ]; then
+    echo "Running setup for FreeBSD. Same as OpenSUSE, I don't use this currently, but putting useful things here for now."
+    # Update package lists, upgrade installed packages, and remove unneeded packages
+    sudo pkg update
+    sudo pkg upgrade
+    # sudo portsnap fetch update
+    sudo pkg autoremove
 fi
 
 
