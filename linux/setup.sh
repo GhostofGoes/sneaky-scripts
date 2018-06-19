@@ -55,6 +55,14 @@ useful_tools=(
     'atop'      # Another resource monitoring tool
     'glances'   # Graphical resource monitoring tool
     'ncdu'      # Graphical view of directory sizes in terminal, using NCurses
+
+    'unzip'
+    'dos2unix'
+    'tree'
+    'git'
+    'make'
+    'wget'
+    'curl'
 )
 
 if [ $DARWIN ]; then
