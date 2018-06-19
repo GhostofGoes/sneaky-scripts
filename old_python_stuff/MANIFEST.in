@@ -1,4 +1,0 @@
-include sneaky/resources/*
-include apps.json
-include README.rst
-include LICENSE

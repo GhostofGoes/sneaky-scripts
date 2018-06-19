@@ -28,10 +28,6 @@ function yum_vscode() {
 # Profile the OS
 os_type
 
-# TODO: configure proxy if set
-# TODO: install vscode
-# TODO: install golang
-
 useful_tools=(
     'tcpdump'       # Capture network traffic
     'tshark'        # Command-line Wireshark
@@ -65,6 +61,19 @@ useful_tools=(
     'curl'
 )
 
+
+# TODO List:
+#   * [ ] configure proxy if set
+#   * [ ] install golang
+#   * [ ] configure vscode
+#   * [ ] install pycharm + configure with desktop icon on ubuntu
+#   * [ ] install chrome + install/upgrade firefox
+#   * [ ] Raspberry Pi-specific setup
+
+# TODO: Flag for non-desktop runs to not include graphical programs like VScode
+# TODO: Install bashrcs!
+
+
 if [ $DARWIN ]; then
     echo "I don't use OSX, sorry. If you put stuff here, please submit a PR or something."
 
@@ -92,7 +101,8 @@ elif [ $DEBIAN ]; then
         sudo apt-get install -y -q "$i"
     done
 
-    
+    sudo apt-get clean
+
     # TODO: base bashrc
     # TODO: detect WSL and do wsl bashrc
     # TODO: debian bashrc
@@ -124,15 +134,15 @@ elif [ $CENTOS ]; then
 
 elif [ $FEDORA ]; then
     echo "Running setup for Fedora, the OS we all wish we could run if everyone wasn't Debian-obscessed. "
-    dnf -y -q check-update
-    sudo dnf -y -q upgrade
+    dnf check-update -y -q 
+    sudo dnf upgrade -y -q 
 
     # Install packages
     sudo dnf install -y -q ShellCheck
 
     # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
     yum_vscode
-    dnf -y -q check-update
+    dnf check-update -y -q
     sudo dnf install -y -q code
 
     # TODO: this will probably fail on many of these
@@ -146,7 +156,12 @@ elif [ $FEDORA ]; then
 elif [ $SUSE ]; then
     echo "Running setup for OpenSUSE. I don't use this yet, but might, so putting anything useful here for now."
     
+    # Refresh package cache and update packages
     sudo zypper refresh
+    sudo zypper update
+    sudo zypper dist-upgrade
+
+    # Install packages
     sudo zypper in ShellCheck
 
     # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
@@ -155,8 +170,13 @@ elif [ $SUSE ]; then
     sudo zypper refresh
     sudo zypper install code
 
-    # TODO: update packages
-    # TODO: install packages
+    # TODO: this will probably fail on many of these
+    for i in "${useful_tools[@]}"; do
+        sudo zypper install "$i"
+    done
+
+    sudo zypper clean
+
     # TODO: bash bashrc
 
 elif [ $FREEBSD ]; then
@@ -164,7 +184,13 @@ elif [ $FREEBSD ]; then
     # Update package lists, upgrade installed packages, and remove unneeded packages
     sudo pkg update
     sudo pkg upgrade
-    # sudo portsnap fetch update
+
+    # TODO: this will probably fail on many of these
+    for i in "${useful_tools[@]}"; do
+        sudo pkg install "$i"
+    done
+
+
     sudo pkg autoremove
 fi
 

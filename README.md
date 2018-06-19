@@ -3,9 +3,7 @@ Uses native platform tools, namely PowerShell on Windows, and BASH on Linux.
 
 If you want to download "LinkedIn" slideshares, there's also a thing for that.
 
-# Usage
-
-## Linux
+# Linux
 ```bash
 # You'll need wget and unzip, unfortunatly. The other option, of course, is git.
 wget https://github.com/GhostofGoes/sneaky-scripts/archive/master.zip
@@ -15,9 +13,10 @@ chmod +x ./linux/setup.sh
 ./linux/setup.sh
 ```
 
-## Windows
+# Windows
 * Download repo and unzip it
-* Open a Administrator-level PowerShell prompt in the unzipped directory:
+* Open `windows/win10-Config.preset` in a text editor and set the configurations to what you want
+* Open a Administrator-level PowerShell prompt in the unzipped directory and run:
 ```powershell
 .\windows\setup.ps1
 ```
@@ -26,7 +25,13 @@ chmod +x ./linux/setup.sh
 * Windows: 10 (1604, 1704, 1709. 1803 TBD.)
 * Ubuntu: 14, 16, 18
 * Kali: 2017+
-* CentOS: 6+, 7+
+* CentOS/RHEL: 6+, 7+
+* Fedora: 28+
+
+## Untested, but potentially supported
+* Debian
+* OpenSUSE
+* FreeBSD
 
 # License
 Licensed under the MIT licence. (See LICENSE file for details)
