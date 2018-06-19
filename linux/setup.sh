@@ -4,11 +4,11 @@
 function os_type() {
 case $(uname) in
   Linux )
-     command -v dnf && { FEDORA=1; echo "dnf detected, definitely Fedora"; return; }
-     command -v yum && { CENTOS=1; echo "yum detected, probably CentOS or RHEL"; return; }
-     command -v zypper && { SUSE=1; echo "zypper detected, probably OpenSUSE"; return; }
-     command -v apt-get && { DEBIAN=1; echo "apt-get detected, probably Debian"; return; }
-     command -v pkg && { FREEBSD=1; echo "pkg detected, probably FreeBSD"; return; }
+     command -v dnf > /dev/null && { FEDORA=1; echo "dnf detected, definitely Fedora"; return; }
+     command -v yum > /dev/null && { CENTOS=1; echo "yum detected, probably CentOS or RHEL"; return; }
+     command -v zypper > /dev/null && { SUSE=1; echo "zypper detected, probably OpenSUSE"; return; }
+     command -v apt-get > /dev/null && { DEBIAN=1; echo "apt-get detected, probably Debian"; return; }
+     command -v pkg > /dev/null && { FREEBSD=1; echo "pkg detected, probably FreeBSD"; return; }
      ;;
   Darwin )
      DARWIN=1
@@ -19,12 +19,18 @@ case $(uname) in
 esac
 }
 
+function yum_vscode() {
+    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+    sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+}
+
+
 # Profile the OS
 os_type
 
-# TODO: proxy configs
-# TODO: vscode
-# TODO: go
+# TODO: configure proxy if set
+# TODO: install vscode
+# TODO: install golang
 
 useful_tools=(
     'tcpdump'       # Capture network traffic
@@ -62,9 +68,17 @@ elif [ $DEBIAN ]; then
     sudo apt-get dist-upgrade -y
     sudo apt-get autoremove -y
 
-    # TODO: install apt packages
+    sudo apt-get install -y -q python3-pip
+    sudo apt-get install -y -q python-pip
     sudo apt-get install -y -q build-essential
     sudo apt-get install -y -q shellcheck
+
+    # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
+    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+    sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+    sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+    sudo apt-get update -y -qq
+    sudo apt-get install -y -q code # or code-insiders
 
     for i in "${useful_tools[@]}"; do
         sudo apt-get install -y -q "$i"
@@ -86,6 +100,12 @@ elif [ $CENTOS ]; then
 
     # Install packages
     sudo yum install -y -q ShellCheck
+
+    # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
+    yum_vscode
+    yum check-update -y -q
+    sudo yum install -y -q code
+
     # TODO: this will probably fail on many of these
     for i in "${useful_tools[@]}"; do
         sudo yum install -y -q "$i"
@@ -96,11 +116,17 @@ elif [ $CENTOS ]; then
 
 elif [ $FEDORA ]; then
     echo "Running setup for Fedora, the OS we all wish we could run if everyone wasn't Debian-obscessed. "
-    dnf -y check-update
-    sudo dnf -y upgrade
+    dnf -y -q check-update
+    sudo dnf -y -q upgrade
 
     # Install packages
     sudo dnf install -y -q ShellCheck
+
+    # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
+    yum_vscode
+    dnf -y -q check-update
+    sudo dnf install -y -q code
+
     # TODO: this will probably fail on many of these
     for i in "${useful_tools[@]}"; do
         sudo dnf install -y -q "$i"
@@ -111,7 +137,16 @@ elif [ $FEDORA ]; then
 
 elif [ $SUSE ]; then
     echo "Running setup for OpenSUSE. I don't use this yet, but might, so putting anything useful here for now."
-    zypper in ShellCheck
+    
+    sudo zypper refresh
+    sudo zypper in ShellCheck
+
+    # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
+    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+    sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/zypp/repos.d/vscode.repo'
+    sudo zypper refresh
+    sudo zypper install code
+
     # TODO: update packages
     # TODO: install packages
     # TODO: bash bashrc
@@ -125,8 +160,18 @@ elif [ $FREEBSD ]; then
     sudo pkg autoremove
 fi
 
+if ! python3 -m pip; then
+    echo "Python 3 pip isn't installed. Installing..."
+    python3 -m ensurepip
+fi
+
+if ! python -m pip; then
+    echo "Python 2 pip isn't installed. Installing..."
+    python -m ensurepip
+fi
 
 # Install Python packages
+echo "Installing Python 3 packages..."
 while read -r py_package; do
     python3 -m pip install --user "$py_package"
 done < ../python-packages.txt

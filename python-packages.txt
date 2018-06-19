@@ -8,3 +8,8 @@ virtualenv
 setuptools
 twine
 pudb
+pypinfo
+PyYAML
+psutil
+cookiecutter
+cowsay
