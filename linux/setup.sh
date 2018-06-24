@@ -1,20 +1,20 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 
 # Source: https://unix.stackexchange.com/a/41735
 function os_type() {
 case $(uname) in
   Linux )
-     command -v dnf > /dev/null && { FEDORA=1; echo "dnf detected, definitely Fedora"; return; }
-     command -v yum > /dev/null && { CENTOS=1; echo "yum detected, probably CentOS or RHEL"; return; }
-     command -v zypper > /dev/null && { SUSE=1; echo "zypper detected, probably OpenSUSE"; return; }
+     command -v cmd.exe > /dev/null && { WSL=1; echo "Windows Subsystem for Linux detected"; }
      command -v apt-get > /dev/null && { DEBIAN=1; echo "apt-get detected, probably Debian"; return; }
+     command -v dnf > /dev/null && { FEDORA=1; echo "dnf detected, definitely Fedora"; return; }
+     command -v yum > /dev/null && { RHEL=1; echo "yum detected, probably RHEL or CentOS"; return; }
+     command -v zypper > /dev/null && { SUSE=1; echo "zypper detected, probably OpenSUSE"; return; }
      command -v pkg > /dev/null && { FREEBSD=1; echo "pkg detected, probably FreeBSD"; return; }
      ;;
   Darwin )
      DARWIN=1
      ;;
   * )
-     # Handle AmgiaOS, CPM, and modified cable modems here.
      ;;
 esac
 }
@@ -60,16 +60,29 @@ useful_tools=(
     'make'
     'wget'
     'curl'
+
+    'jq'        # Command line JSON tool (https://stedolan.github.io/jq/)
+    'ripgrep'   # Recursive grep/find thing (https://github.com/BurntSushi/ripgrep)
 )
 
 
 # TODO List:
-#   * [ ] configure proxy if set
-#   * [ ] install golang
-#   * [ ] configure vscode
-#   * [ ] install pycharm + configure with desktop icon on ubuntu
-#   * [ ] install chrome + install/upgrade firefox
-#   * [ ] Raspberry Pi-specific setup
+# [ ] Configure proxy if set
+# [ ] Configure vscode
+# [ ] Configure PyCharm with desktop icon on Ubuntu
+# [ ] Raspberry Pi-specific setup
+# [ ] Configure Docker
+
+# Programs to add
+#   Docker
+#   Git LFS
+#   Firefox
+#   Chrome/Chromium
+#   golang
+#   PyCharm
+
+# Features
+#   Detect Ubuntu
 
 # TODO: Flag for non-desktop runs to not include graphical programs like VScode
 # TODO: Install bashrcs!
@@ -79,7 +92,7 @@ if [ $DARWIN ]; then
     echo "I don't use OSX, sorry. If you put stuff here, please submit a PR or something."
 
 elif [ $DEBIAN ]; then
-    echo "Running setup for Debian or Debian-derivative. "
+    echo "Running setup for Debian or some impure Debian-derivative, like Ubuntu or Kali. "
     # Update package cache, upgrade packages, and cleanup
     sudo apt-get update -y -qq
     sudo apt-get upgrade -y
@@ -109,8 +122,8 @@ elif [ $DEBIAN ]; then
     # TODO: detect WSL and do wsl bashrc
     # TODO: debian bashrc
 
-elif [ $CENTOS ]; then
-    echo "Running setup for CentOS. You masochist. "
+elif [ $RHEL ]; then
+    echo "Running setup for RHEL/CentOS. I'd put something witty here, but that'd be against corporate policy."
     # Update package list and installed packages
     yum check-update -y -q
     sudo yum update -y -q
@@ -132,10 +145,10 @@ elif [ $CENTOS ]; then
     done
 
     # TODO: base bashrc
-    # TODO: centos bashrc
+    # TODO: RHEL bashrc
 
 elif [ $FEDORA ]; then
-    echo "Running setup for Fedora, the OS we all wish we could run if everyone wasn't Debian-obscessed. "
+    echo "Running setup for Fedora, the OS we all wish we could run if everyone wasn't Debian-obscessed."
     dnf check-update -y -q 
     sudo dnf upgrade -y -q 
 
@@ -156,7 +169,8 @@ elif [ $FEDORA ]; then
     # TODO: fedora bashrc
 
 elif [ $SUSE ]; then
-    echo "Running setup for OpenSUSE. I don't use this yet, but might, so putting anything useful here for now."
+    echo "Running setup for OpenSUSE. Let's do science! That's what OpenSUSE is for, right? ...right?"
+    ## NOTE: I don't use this yet, but might, so putting anything useful here for now
     
     # Refresh package cache and update packages
     sudo zypper refresh
@@ -182,7 +196,9 @@ elif [ $SUSE ]; then
     # TODO: bash bashrc
 
 elif [ $FREEBSD ]; then
-    echo "Running setup for FreeBSD. Same as OpenSUSE, I don't use this currently, but putting useful things here for now."
+    echo "Running setup for FreeBSD. This is probably a firewall or router. You poor soul."
+    ## NOTE: I don't use this currently, but putting useful things here for now
+
     # Update package lists, upgrade installed packages, and remove unneeded packages
     sudo pkg update
     sudo pkg upgrade
