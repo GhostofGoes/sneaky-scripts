@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Sourced by login shells only
 
 # Load .profile, containing login, non-bash related initializations.

@@ -1,9 +1,9 @@
-
+#!/usr/bin/env bash
 
 # Make some possibly destructive commands more interactive
 alias rm="rm -i"  # Interactive mode delete
-alias mv='mv -i'
-alias cp='cp -i'
+alias mv="mv -i"
+alias cp="cp -i"
 
 # Niceities
 alias cd..="cd .."
@@ -15,10 +15,6 @@ alias mkdir="mkdir -pv"  # Creates parent directories if needed
 alias hist="history"
 alias jobs="jobs -l"
 alias path="echo -e ${PATH//:/\\n}"
-
-# Power commands
-alias shutdown="sudo shutdown -P now"
-alias reboot="sudo shutdown -r now"
 
 # Grep shorthands
 alias grep="grep --color=auto --exclude-dir=\.git"  # Colorize grep command output + skip .git directories
@@ -40,9 +36,13 @@ alias nowdate="date +\"%d-%m-%Y\""
 
 # Networking
 alias ports="netstat -tulanp"
+alias ping="ping -c 4"
 
 # Fancy git log
 alias gl="git log --graph --decorate --name-status --all"
 
 # Colorful tmux
 alias tmux="TERM=xterm-256color tmux"
+
+# cppcheck
+alias cppc="cppcheck --enable=all --suppress=missingIncludeSystem ."

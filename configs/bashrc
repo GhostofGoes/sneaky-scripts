@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 # Sources:
 #   http://tldp.org/LDP/abs/html/sample-bashrc.html
 #   http://stefaanlippens.net/my_bashrc_aliases_profile_and_other_stuff/
@@ -12,50 +12,101 @@ if [ -f /etc/bashrc ]; then
       . /etc/bashrc   # --> Read /etc/bashrc, if present.
 fi
 
-if [ "$(command -v apt > /dev/null)" ]; then
-    alias update="sudo apt -y update"
-    alias upgrade="sudo apt -y update && sudo apt upgrade"
-    alias full-update="sudo apt -y update && sudo apt full-upgrade"
-elif [ "$(command -v apt-get > /dev/null)"  ]; then
-    alias update="sudo apt-get -y update"
-    alias upgrade="sudo apt-get -y update && sudo apt-get upgrade"
-    alias full-update="sudo apt-get -y update && sudo apt-get dist-upgrade"
-elif [ "$(command -v dnf > /dev/null)"  ]; then
-    alias update="dnf -y check-update"
-    alias upgrade="sudo dnf -y upgrade"
-elif [ "$(command -v yum > /dev/null)"  ]; then
-    alias update="sudo yum update"
-fi
-
-# Windows Subsystem for Linux (WSL)
-if [ "$(command -v cmd.exe > /dev/null)" ]; then
-    # Windows username can differ from user in WSL
-    export WINUSER=$( whoami.exe | cut -d '\' -f2 | tr -d '[:space:]')
-    alias winhome="cd /mnt/c/Users/$WINUSER/"
-    alias windocs"cd /mnt/c/Users/$WINUSER/Documents/"
-    # Fix "ssh-add"
-    eval "$(ssh-agent -s) >/dev/null 2>&1"
-else
-    # Power commands, which don't apply to WSL
-    alias shutdown="sudo shutdown -P now"
-    alias reboot="sudo shutdown -r now"
-fi
-
 # Enable programmable completion features
 if [ -f /etc/bash_completion ]; then
     source /etc/bash_completion
 fi
 
-# Append commands to the bash command history file (~/.bash_history)
-# instead of overwriting it.
+# Source: https://unix.stackexchange.com/a/41735
+function os_type() {
+case $(uname) in
+  Linux )
+     command -v cmd.exe > /dev/null && { WSL=1; }
+     command -v apt > /dev/null && { DEBIAN=1; JUST_APT=1; return; }
+     command -v apt-get > /dev/null && { DEBIAN=1; APT_GET=1; return; }
+     command -v dnf > /dev/null && { FEDORA=1; return; }
+     command -v yum > /dev/null && { RHEL=1; return; }
+     command -v zypper > /dev/null && { SUSE=1; return; }
+     command -v pkg > /dev/null && { FREEBSD=1; return; }
+     ;;
+  Darwin )
+     DARWIN=1
+     ;;
+  * )
+     ;;
+esac
+}
+os_type
+
+if [ $JUST_APT ]; then
+    alias update="sudo apt -y update"
+    alias upgrade="sudo apt -y update && sudo apt upgrade"
+    alias full-update="sudo apt -y update && sudo apt full-upgrade"
+elif [ $APT_GET ]; then
+    alias update="sudo apt-get -y update"
+    alias upgrade="sudo apt-get -y update && sudo apt-get upgrade"
+    alias full-update="sudo apt-get -y update && sudo apt-get dist-upgrade"
+elif [ $FEDORA ]; then
+    alias update="dnf -y check-update"
+    alias upgrade="sudo dnf -y upgrade"
+elif [ $RHEL  ]; then
+    alias update="sudo yum update"
+fi
+
+# Windows Subsystem for Linux (WSL)
+if [ $WSL ]; then
+    # Windows username can differ from user in WSL
+    WINUSER=$( whoami.exe | cut -d '\' -f2 | tr -d '[:space:]')
+    export WINUSER
+    alias winhome='cd /mnt/c/Users/"$WINUSER"/'
+    alias windocs='cd /mnt/c/Users/"$WINUSER"/Documents/'
+    # Fix "ssh-add"
+    eval "$(ssh-agent -s) >/dev/null 2>&1"
+elif [ $DARWIN ]; then
+    alias shutdown="sudo shutdown -hP now"
+    alias reboot="sudo reboot now"
+    alias sleep="shutdown -s now"
+else
+    # Power commands, which don't apply to WSL
+    alias shutdown="sudo shutdown -P now"
+    alias reboot="sudo shutdown -r now"
+    alias halt="sudo halt -P"
+fi
+
+# Append commands to the bash command history file (~/.bash_history) instead of overwriting it
 shopt -s histappend
-
-# Append commands to the history every time a prompt is shown,
-# instead of after closing the session.
+# Append commands to the history every time a prompt is shown, instead of after closing the session
 PROMPT_COMMAND='history -a'
-
 export HISTCONTROL="ignoredups"
 export HISTIGNORE="clear:history"
+# Unset for unlimited history
+export HISTSIZE=
+export HISTFILESIZE=
+
+# Make shell work a little better (https://www.gnu.org/software/bash/manual/bash.html#index-shopt)
+shopt -s checkhash checkwinsize
+# Make misspellings and name conflicts less annoying
+shopt -s autocd cdspell dirspell
+shopt -s checkjobs huponexit
+
+# Enable ls colors
+if ls --color=auto &> /dev/null; then
+    alias ls="ls --color=auto"
+else
+    export CLICOLOR=1
+fi
+
+# Colored man pages
+man() {
+    env LESS_TERMCAP_mb=$'\E[01;31m' \
+    LESS_TERMCAP_md=$'\E[01;38;5;74m' \
+    LESS_TERMCAP_me=$'\E[0m' \
+    LESS_TERMCAP_se=$'\E[0m' \
+    LESS_TERMCAP_so=$'\E[38;5;246m' \
+    LESS_TERMCAP_ue=$'\E[0m' \
+    LESS_TERMCAP_us=$'\E[04;38;5;146m' \
+    man "$@"
+}
 
 # enable colors in less
 # -R or --RAW-CONTROL-CHARS
