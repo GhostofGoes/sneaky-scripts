@@ -46,11 +46,12 @@ useful_tools=(
     'whois'       # Who are you? (Yeah, this isn't installed by default...)
 
     'cloc'      # Count lines of code
-    'nano'      # Life not not complete without this
+    'nano'      # Life's not complete without Nano
     'htop'      # Coloured and improved version of top
     'atop'      # Another resource monitoring tool
     'glances'   # Graphical resource monitoring tool
     'ncdu'      # Graphical view of directory sizes in terminal, using NCurses
+    'direnv'    # Shell environment switcher (https://direnv.net/)
 
     'unzip'
     'dos2unix'
@@ -89,6 +90,7 @@ elif [ $DEBIAN ]; then
     sudo apt-get install -y -q python-pip
     sudo apt-get install -y -q build-essential
     sudo apt-get install -y -q shellcheck
+    sudo apt-get install -y -q net-tools
 
     # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
     curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
