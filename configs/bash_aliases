@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
+# http://tldp.org/LDP/abs/html/sample-bashrc.html
+# https://github.com/andschwa/dotfiles
 
 # Make some possibly destructive commands more interactive
 alias rm="rm -i"  # Interactive mode delete
 alias mv="mv -i"
 alias cp="cp -i"
+
+alias mkdir="mkdir -pv"  # Creates parent directories if needed
+alias path="echo -e ${PATH//:/\\n}"
 
 # Niceities
 alias cd..="cd .."
@@ -11,10 +16,8 @@ alias hs="cd ~/ && ls"
 alias up="cd .."
 alias home="cd ~/"
 alias root="sudo su"
-alias mkdir="mkdir -pv"  # Creates parent directories if needed
 alias hist="history"
 alias jobs="jobs -l"
-alias path="echo -e ${PATH//:/\\n}"
 
 # Grep shorthands
 alias grep="grep --color=auto --exclude-dir=\.git"  # Colorize grep command output + skip .git directories
@@ -23,11 +26,14 @@ alias grep="grep --color=auto --exclude-dir=\.git"  # Colorize grep command outp
 alias l.="ls -d .* --color=auto"
 alias ls="ls -CF --color=auto"  # Make 'normal' ls nice with Columns and Colors
 alias lm="ls -lhAF --color=auto | more"  # For big directories
-alias ll="ls -lhF --color=auto"
-alias la="ls -lhAF --color=auto"
+alias ll="ls -lv --group-directories-first"
+alias la="ls -AF --color=auto"
 alias lar="ls -lhAR --color=auto | more"  # Recursive subdirectories, listed out
 alias lcr="ls -CAR --color=auto | more"  # Recursive subdirectories, by column
-alias lh="ls -lahF --color=auto"
+alias lh="ls -lAhF --color=auto"
+alias lx='ls -lXB'  # Sort by extension
+alias lt='ls -ltr'  # Sort by date, most recent last
+alias tree='tree -Csuh'  # Nice alternative to 'recursive ls'
 
 # Time
 alias now="date +"%T""
