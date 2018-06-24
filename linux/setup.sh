@@ -104,6 +104,7 @@ elif [ $DEBIAN ]; then
     sudo apt-get install -y -q build-essential
     sudo apt-get install -y -q shellcheck
     sudo apt-get install -y -q net-tools
+    sudo apt-get install -y -q geoip-bin
 
     # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
     curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
@@ -133,6 +134,7 @@ elif [ $RHEL ]; then
 
     # Install packages
     sudo yum install -y -q ShellCheck
+    sudo yum install -y -q geoip  # geoiplookup 
 
     # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
     yum_vscode
@@ -159,6 +161,7 @@ elif [ $FEDORA ]; then
     yum_vscode
     dnf check-update -y -q
     sudo dnf install -y -q code
+    sudo dnf install -y -q geoip
 
     # TODO: this will probably fail on many of these
     for i in "${useful_tools[@]}"; do
