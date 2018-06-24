@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 # Source: https://unix.stackexchange.com/a/41735
 function os_type() {
@@ -63,6 +63,7 @@ useful_tools=(
 
     'jq'        # Command line JSON tool (https://stedolan.github.io/jq/)
     'ripgrep'   # Recursive grep/find thing (https://github.com/BurntSushi/ripgrep)
+    'cppcheck'  # C++ static code analyzer (https://github.com/danmar/cppcheck)
 )
 
 
@@ -72,6 +73,7 @@ useful_tools=(
 # [ ] Configure PyCharm with desktop icon on Ubuntu
 # [ ] Raspberry Pi-specific setup
 # [ ] Configure Docker
+# [ ] Timezone configuration
 
 # Programs to add
 #   Docker
@@ -83,6 +85,7 @@ useful_tools=(
 
 # Features
 #   Detect Ubuntu
+#   Detect pacman (Arch, MSYS)
 
 # TODO: Flag for non-desktop runs to not include graphical programs like VScode
 # TODO: Install bashrcs!
@@ -103,8 +106,9 @@ elif [ $DEBIAN ]; then
     sudo apt-get install -y -q python-pip
     sudo apt-get install -y -q build-essential
     sudo apt-get install -y -q shellcheck
-    sudo apt-get install -y -q net-tools
+    sudo apt-get install -y -q net-tools  # ipconfig, arp, etc.
     sudo apt-get install -y -q geoip-bin
+    sudo apt-get install -y -q gddrescue  # ddrescue
 
     # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
     curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg

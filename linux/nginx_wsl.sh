@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 # Install Nginx on WSL
 sudo apt -y update
 sudo apt -y upgrade
