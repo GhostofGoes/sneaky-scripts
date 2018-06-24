@@ -1,0 +1,73 @@
+#!/usr/bin/bash
+# Sources:
+#   http://tldp.org/LDP/abs/html/sample-bashrc.html
+#   http://stefaanlippens.net/my_bashrc_aliases_profile_and_other_stuff/
+#
+
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+# Read any global definitions
+if [ -f /etc/bashrc ]; then
+      . /etc/bashrc   # --> Read /etc/bashrc, if present.
+fi
+
+if [ "$(command -v apt > /dev/null)" ]; then
+    alias update="sudo apt -y update"
+    alias upgrade="sudo apt -y update && sudo apt upgrade"
+    alias full-update="sudo apt -y update && sudo apt full-upgrade"
+elif [ "$(command -v apt-get > /dev/null)"  ]; then
+    alias update="sudo apt-get -y update"
+    alias upgrade="sudo apt-get -y update && sudo apt-get upgrade"
+    alias full-update="sudo apt-get -y update && sudo apt-get dist-upgrade"
+elif [ "$(command -v dnf > /dev/null)"  ]; then
+    alias update="dnf -y check-update"
+    alias upgrade="sudo dnf -y upgrade"
+elif [ "$(command -v yum > /dev/null)"  ]; then
+    alias update="sudo yum update"
+fi
+
+# Windows Subsystem for Linux (WSL)
+if [ "$(command -v cmd.exe > /dev/null)" ]; then
+    # Windows username can differ from user in WSL
+    export WINUSER=$( whoami.exe | cut -d '\' -f2 | tr -d '[:space:]')
+    alias winhome="cd /mnt/c/Users/$WINUSER/"
+    alias windocs"cd /mnt/c/Users/$WINUSER/Documents/"
+    # Fix "ssh-add"
+    eval "$(ssh-agent -s) >/dev/null 2>&1"
+else
+    # Power commands, which don't apply to WSL
+    alias shutdown="sudo shutdown -P now"
+    alias reboot="sudo shutdown -r now"
+fi
+
+# Enable programmable completion features
+if [ -f /etc/bash_completion ]; then
+    source /etc/bash_completion
+fi
+
+# Append commands to the bash command history file (~/.bash_history)
+# instead of overwriting it.
+shopt -s histappend
+
+# Append commands to the history every time a prompt is shown,
+# instead of after closing the session.
+PROMPT_COMMAND='history -a'
+
+export HISTCONTROL="ignoredups"
+export HISTIGNORE="clear:history"
+
+# enable colors in less
+# -R or --RAW-CONTROL-CHARS
+export LESS=-R
+
+# Python better-exceptions: https://github.com/Qix-/better-exceptions
+export BETTER_EXCEPTIONS=1
+
+# Load aliases
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# Set colored terminal prompt as "hostname:current directory$ "
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '

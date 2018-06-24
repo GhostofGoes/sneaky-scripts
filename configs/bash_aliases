@@ -1,0 +1,48 @@
+
+
+# Make some possibly destructive commands more interactive
+alias rm="rm -i"  # Interactive mode delete
+alias mv='mv -i'
+alias cp='cp -i'
+
+# Niceities
+alias cd..="cd .."
+alias hs="cd ~/ && ls"
+alias up="cd .."
+alias home="cd ~/"
+alias root="sudo su"
+alias mkdir="mkdir -pv"  # Creates parent directories if needed
+alias hist="history"
+alias jobs="jobs -l"
+alias path="echo -e ${PATH//:/\\n}"
+
+# Power commands
+alias shutdown="sudo shutdown -P now"
+alias reboot="sudo shutdown -r now"
+
+# Grep shorthands
+alias grep="grep --color=auto --exclude-dir=\.git"  # Colorize grep command output + skip .git directories
+
+# ls shorthands
+alias l.="ls -d .* --color=auto"
+alias ls="ls -CF --color=auto"  # Make 'normal' ls nice with Columns and Colors
+alias lm="ls -lhAF --color=auto | more"  # For big directories
+alias ll="ls -lhF --color=auto"
+alias la="ls -lhAF --color=auto"
+alias lar="ls -lhAR --color=auto | more"  # Recursive subdirectories, listed out
+alias lcr="ls -CAR --color=auto | more"  # Recursive subdirectories, by column
+alias lh="ls -lahF --color=auto"
+
+# Time
+alias now="date +"%T""
+alias nowtime=now
+alias nowdate="date +\"%d-%m-%Y\""
+
+# Networking
+alias ports="netstat -tulanp"
+
+# Fancy git log
+alias gl="git log --graph --decorate --name-status --all"
+
+# Colorful tmux
+alias tmux="TERM=xterm-256color tmux"
