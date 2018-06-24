@@ -235,3 +235,4 @@ while read -r py_package; do
     python3 -m pip install --user "$py_package"
 done < ../python-packages.txt
 
+source ./configure.sh

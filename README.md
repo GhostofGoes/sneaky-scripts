@@ -4,13 +4,21 @@ Uses native platform tools, namely PowerShell on Windows, and BASH on Linux.
 If you want to download "LinkedIn" slideshares, there's also a thing for that.
 
 # Linux
+
+## If you just want to get the configurations
+```bash
+chmod +x ./configure.sh
+./configure.sh
+```
+
+# Full setup, including install of various tools and packages
 ```bash
 # You'll need wget and unzip, unfortunatly. The other option, of course, is git.
 wget https://github.com/GhostofGoes/sneaky-scripts/archive/master.zip
 unzip master.zip
 cd sneaky-scripts-master
-chmod +x ./linux/setup.sh
-./linux/setup.sh
+chmod +x ./setup.sh
+./setup.sh
 ```
 
 # Windows
