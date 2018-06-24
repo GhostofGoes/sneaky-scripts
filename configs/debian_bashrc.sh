@@ -1,6 +1,5 @@
 # Set colored terminal prompt as "hostname:current directory$ "
-# Not sure if this works on centos yet
-# PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
 
 # Niceities
 alias cd..="cd .."
@@ -29,6 +28,7 @@ alias ll="ls -lh --color=auto"
 alias la="ls -lhA --color=auto"
 alias lar="ls -lhAR --color=auto | more"  # Recursive subdirectories, listed out
 alias lcr="ls -CAR --color=auto | more"  # Recursive subdirectories, by column
+alias lh="ls -lah --color=auto"
 
 # Time
 alias now="date +"%T""
@@ -39,4 +39,5 @@ alias nowdate="date +\"%d-%m-%Y\""
 alias ports="netstat -tulanp"
 
 # Updates
-alias update="sudo yum update"
+alias update="sudo apt-get -y update && sudo apt-get upgrade"
+alias dist-update="sudo apt-get -y update && sudo apt-get dist-upgrade"

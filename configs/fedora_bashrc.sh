@@ -29,6 +29,7 @@ alias ll="ls -lh --color=auto"
 alias la="ls -lhA --color=auto"
 alias lar="ls -lhAR --color=auto | more"  # Recursive subdirectories, listed out
 alias lcr="ls -CAR --color=auto | more"  # Recursive subdirectories, by column
+alias lh="ls -lah --color=auto"
 
 # Time
 alias now="date +"%T""
