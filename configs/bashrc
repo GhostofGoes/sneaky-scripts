@@ -41,11 +41,11 @@ os_type
 if [ $JUST_APT ]; then
     alias update="sudo apt -y update"
     alias upgrade="sudo apt -y update && sudo apt upgrade"
-    alias full-update="sudo apt -y update && sudo apt full-upgrade"
+    alias full-upgrade="sudo apt -y update && sudo apt full-upgrade"
 elif [ $APT_GET ]; then
     alias update="sudo apt-get -y update"
     alias upgrade="sudo apt-get -y update && sudo apt-get upgrade"
-    alias full-update="sudo apt-get -y update && sudo apt-get dist-upgrade"
+    alias full-upgrade="sudo apt-get -y update && sudo apt-get dist-upgrade"
 elif [ $FEDORA ]; then
     alias update="dnf -y check-update"
     alias upgrade="sudo dnf -y upgrade"
