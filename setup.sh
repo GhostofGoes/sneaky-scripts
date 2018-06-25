@@ -75,8 +75,6 @@ useful_tools=(
 # [ ] Timezone configuration
 
 # Programs to add
-#   Docker
-#   Git LFS
 #   Firefox
 #   Chrome/Chromium
 #   golang
@@ -87,7 +85,7 @@ useful_tools=(
 #   Detect pacman (Arch, MSYS)
 
 # TODO: Flag for non-desktop runs to not include graphical programs like VScode
-# TODO: Install bashrcs!
+# TODO: cleanup the output and messages
 
 
 if [ $DARWIN ]; then
@@ -120,8 +118,7 @@ elif [ $DEBIAN ]; then
     for i in "${useful_tools[@]}"; do
         sudo apt-get install -y -q "$i"
     done
-
-    sudo apt-get clean
+    sudo apt-get clean    
 
     # TODO: base bashrc
     # TODO: detect WSL and do wsl bashrc
@@ -236,8 +233,22 @@ while read -r py_package; do
 done < ../python-packages.txt
 
 # Install Docker
+echo "Installing Docker..."
 curl -fsSL get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 sudo usermod -aG docker "$USER"
 
+# Install git-lfs
+# TODO: method to determine latest version
+LFSVERSION="2.4.2"
+echo "Installing git-lfs $LFSVERSION..."
+wget https://github.com/git-lfs/git-lfs/releases/download/v"$LFSVERSION"/git-lfs-linux-amd64-"$LFSVERSION".tar.gz
+tar -C ./ -xf git-lfs-linux-amd64-"$LFSVERSION".tar.gz
+rm -f git-lfs-linux-amd64-"$LFSVERSION".tar.gz
+pushd ./git-lfs-"$LFSVERSION" > /dev/null
+sudo ./install.sh
+popd > /dev/null
+rm -rf "./git-lfs-$LFSVERSION/"
+
+# Install configs
 source ./configure.sh
