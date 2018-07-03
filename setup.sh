@@ -19,6 +19,38 @@ case $(uname) in
 esac
 }
 
+# Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
+function install_vscode() {
+    echo "Installing VScode..."
+    if [ $DEBIAN ] ; then
+        curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+        sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+        sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+        sudo apt-get update -y -qq
+        sudo apt-get install -y -qq code # Change this to "code-insiders" if you like to live on the bleeding edge
+    elif [ "$(command -v rpm > /dev/null)" -eq 0 ] ; then
+        sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+        if [ ! $SUSE ] ; then
+            sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+        else
+            sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/zypp/repos.d/vscode.repo'
+        fi
+        if [ $SUSE ] ; then
+            sudo zypper -n -q -i refresh
+            sudo zypper -n -q -i install -l code
+        elif [ $FEDORA ] ; then
+            dnf check-update -y -qq
+            sudo dnf install -y -qq code
+        else
+            yum check-update -y -qq
+            sudo yum install -y -qq code
+        fi
+    else
+        echo "Failed to install VScode: unknown platform" && return
+    fi
+    echo "Finished installing VScode"
+}
+
 function yum_vscode() {
     sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
     sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
@@ -68,7 +100,7 @@ useful_tools=(
     'cppcheck'  # C++ static code analyzer (https://github.com/danmar/cppcheck) 
 )
 
-apt_packages = (
+apt_packages=(
     'python3-pip'
     'python-pip'
     'build-essential'
@@ -106,6 +138,7 @@ apt_packages = (
 
 # Script settings (TODO)
 # Load from a default named file, and/or file specified as argument
+INSTALL_VSCODE=true
 
 # Profile the OS
 os_type
@@ -127,14 +160,6 @@ elif [ $DEBIAN ]; then
         sudo apt-get install -y -qq "$i"
     done
 
-    # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
-    echo "Installing VScode..."
-    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-    sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
-    sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-    sudo apt-get update -y -qq
-    sudo apt-get install -y -qq code # or code-insiders
-
     # TODO: generalize this and just swap out the package manager? (the 'p' thing I saw maybe?)
     echo "Installing various useful tools..."
     for i in "${useful_tools[@]}"; do
@@ -155,12 +180,6 @@ elif [ $RHEL ]; then
     # Install packages
     sudo yum install -y -qq ShellCheck
     sudo yum install -y -qq geoip  # geoiplookup 
-
-    # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
-    echo "Installing VScode..."
-    yum_vscode
-    yum check-update -y -qq
-    sudo yum install -y -qq code
 
     # TODO: this will probably fail on many of these
     for i in "${useful_tools[@]}"; do
@@ -199,14 +218,8 @@ elif [ $SUSE ]; then
     sudo zypper -n -q -i dist-upgrade
 
     # Install packages
-    sudo zypper -n -q -i install --auto-agree-with-licenses --recommends ShellCheck
-
-    # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
-    echo "Installing VScode..."
-    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-    sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/zypp/repos.d/vscode.repo'
-    sudo zypper -n -q -i refresh
-    sudo zypper -n -q -i install code
+    sudo zypper -n -q -i install --auto-agree-with-licenses --recommends --force-resolution ShellCheck
+    sudo zypper -n -i install -l --recommends --force-resolution python3
 
     # TODO: this will probably fail on many of these
     for i in "${useful_tools[@]}"; do
@@ -230,11 +243,11 @@ elif [ $FREEBSD ]; then
 fi
 
 # Create .ssh directory if it doesn't exist
-mkdir -pv "~/.ssh/"
+mkdir -pv ~/.ssh/
 if [ $WSL ] ; then
     WINUSER=$( whoami.exe | cut -d '\' -f2 | tr -d '[:space:]')
     if [ -d "/mnt/c" ]; then
-        mkdir -pv '/mnt/c/Users/"$WINUSER"/.ssh/'
+        mkdir -pv "/mnt/c/Users/{$WINUSER}/.ssh/"
     fi
 fi
 
@@ -271,6 +284,12 @@ pushd ./git-lfs-"$LFSVERSION" > /dev/null
 sudo ./install.sh
 popd > /dev/null
 rm -rf "./git-lfs-$LFSVERSION/"
+
+
+# Install Visual Studio Code. Skip if we're in WSL.
+if [ $INSTALL_VSCODE ] && [ ! $WSL ] && [ "$(command -v code > /dev/null)" -eq 1 ] ; then
+    install_vscode
+fi
 
 # Install configs
 source ./configure.sh
