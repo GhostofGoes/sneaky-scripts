@@ -1,0 +1,13 @@
+{
+  // "git.path": "C:\\Program Files\\Git\\bin\\git.exe",
+  // "workbench.startupEditor": "newUntitledFile",
+  "git.autofetch": true,
+
+  "vsicons.dontShowNewVersionMessage": true,
+  "window.zoomLevel": 1,
+  "editor.minimap.enabled": false,
+
+  "shellcheck.enable": true,
+  "shellcheck.run": "onType",
+  "shellcheck.useWSL": true
+}
