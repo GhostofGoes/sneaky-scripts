@@ -116,26 +116,31 @@ if [ $DARWIN ]; then
 elif [ $DEBIAN ]; then
     echo "Running setup for Debian or some impure Debian-derivative, like Ubuntu or Kali. "
     # Update package cache, upgrade packages, and cleanup
+    echo "Refreshing apt package cache and updating existing packages..."
     sudo apt-get update -y -qq
     sudo apt-get upgrade -y -qq
     sudo apt-get dist-upgrade -y -qq
     sudo apt-get autoremove -y -qq
 
+    echo "Installing apt-specific packages..."
     for i in "${apt_packages[@]}"; do
         sudo apt-get install -y -qq "$i"
     done
 
     # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
+    echo "Installing VScode..."
     curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
     sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
     sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
     sudo apt-get update -y -qq
-    sudo apt-get install -y -q code # or code-insiders
+    sudo apt-get install -y -qq code # or code-insiders
 
+    # TODO: generalize this and just swap out the package manager? (the 'p' thing I saw maybe?)
+    echo "Installing various useful tools..."
     for i in "${useful_tools[@]}"; do
-        sudo apt-get install -y -q "$i"
+        sudo apt-get install -y -qq "$i"
     done
-    sudo apt-get clean    
+    sudo apt-get -y -qq clean    
 
     # TODO: base bashrc
     # TODO: detect WSL and do wsl bashrc
@@ -144,24 +149,26 @@ elif [ $DEBIAN ]; then
 elif [ $RHEL ]; then
     echo "Running setup for RHEL/CentOS. I'd put something witty here, but that'd be against corporate policy."
     # Update package list and installed packages
-    yum check-update -y -q
-    sudo yum update -y -q
+    echo "Refreshing yum package cache and updating existing packages..."
+    yum check-update -y -qq
+    sudo yum update -y -qq
 
     # Add EPEL package repository
-    sudo yum install -y -q epel-release
+    sudo yum install -y -qq epel-release
 
     # Install packages
-    sudo yum install -y -q ShellCheck
-    sudo yum install -y -q geoip  # geoiplookup 
+    sudo yum install -y -qq ShellCheck
+    sudo yum install -y -qq geoip  # geoiplookup 
 
     # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
+    echo "Installing VScode..."
     yum_vscode
-    yum check-update -y -q
-    sudo yum install -y -q code
+    yum check-update -y -qq
+    sudo yum install -y -qq code
 
     # TODO: this will probably fail on many of these
     for i in "${useful_tools[@]}"; do
-        sudo yum install -y -q "$i"
+        sudo yum install -y -qq "$i"
     done
 
     # TODO: base bashrc
@@ -169,21 +176,24 @@ elif [ $RHEL ]; then
 
 elif [ $FEDORA ]; then
     echo "Running setup for Fedora, the OS we all wish we could run if everyone wasn't Debian-obscessed."
-    dnf check-update -y -q 
-    sudo dnf upgrade -y -q 
+    echo "Refreshing dnf package cache and updating existing packages..."
+    dnf check-update -y -qq
+    sudo dnf upgrade -y -qq 
 
     # Install packages
-    sudo dnf install -y -q ShellCheck
+    sudo dnf install -y -qq ShellCheck
 
     # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
+    echo "Installing VScode..."
     yum_vscode
-    dnf check-update -y -q
-    sudo dnf install -y -q code
-    sudo dnf install -y -q geoip
+    dnf check-update -y -qq
+    sudo dnf install -y -qq code
+
+    sudo dnf install -y -qq geoip
 
     # TODO: this will probably fail on many of these
     for i in "${useful_tools[@]}"; do
-        sudo dnf install -y -q "$i"
+        sudo dnf install -y -qq "$i"
     done
 
     # TODO: base bashrc
@@ -194,18 +204,20 @@ elif [ $SUSE ]; then
     ## NOTE: I don't use this yet, but might, so putting anything useful here for now
     
     # Refresh package cache and update packages
-    sudo zypper refresh
-    sudo zypper update
-    sudo zypper dist-upgrade
+    echo "Refreshing zypper package cache and updating existing packages..."
+    sudo zypper -q refresh
+    sudo zypper -q update
+    sudo zypper -q dist-upgrade
 
     # Install packages
-    sudo zypper in ShellCheck
+    sudo zypper -q install ShellCheck
 
     # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
+    echo "Installing VScode..."
     sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
     sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/zypp/repos.d/vscode.repo'
-    sudo zypper refresh
-    sudo zypper install code
+    sudo zypper -q refresh
+    sudo zypper -q install code
 
     # TODO: this will probably fail on many of these
     for i in "${useful_tools[@]}"; do
