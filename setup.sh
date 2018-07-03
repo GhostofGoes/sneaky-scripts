@@ -142,10 +142,6 @@ elif [ $DEBIAN ]; then
     done
     sudo apt-get -y -qq clean    
 
-    # TODO: base bashrc
-    # TODO: detect WSL and do wsl bashrc
-    # TODO: debian bashrc
-
 elif [ $RHEL ]; then
     echo "Running setup for RHEL/CentOS. I'd put something witty here, but that'd be against corporate policy."
     # Update package list and installed packages
@@ -171,9 +167,6 @@ elif [ $RHEL ]; then
         sudo yum install -y -qq "$i"
     done
 
-    # TODO: base bashrc
-    # TODO: RHEL bashrc
-
 elif [ $FEDORA ]; then
     echo "Running setup for Fedora, the OS we all wish we could run if everyone wasn't Debian-obscessed."
     echo "Refreshing dnf package cache and updating existing packages..."
@@ -182,6 +175,7 @@ elif [ $FEDORA ]; then
 
     # Install packages
     sudo dnf install -y -qq ShellCheck
+    sudo dnf install -y -qq geoip
 
     # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
     echo "Installing VScode..."
@@ -189,15 +183,10 @@ elif [ $FEDORA ]; then
     dnf check-update -y -qq
     sudo dnf install -y -qq code
 
-    sudo dnf install -y -qq geoip
-
     # TODO: this will probably fail on many of these
     for i in "${useful_tools[@]}"; do
         sudo dnf install -y -qq "$i"
     done
-
-    # TODO: base bashrc
-    # TODO: fedora bashrc
 
 elif [ $SUSE ]; then
     echo "Running setup for OpenSUSE. Let's do science! That's what OpenSUSE is for, right? ...right?"
@@ -205,28 +194,25 @@ elif [ $SUSE ]; then
     
     # Refresh package cache and update packages
     echo "Refreshing zypper package cache and updating existing packages..."
-    sudo zypper -q refresh
-    sudo zypper -q update
-    sudo zypper -q dist-upgrade
+    sudo zypper --non-interactive --quiet --ignore-unknown refresh
+    sudo zypper -n -q -i update
+    sudo zypper -n -q -i dist-upgrade
 
     # Install packages
-    sudo zypper -q install ShellCheck
+    sudo zypper -n -q -i install --auto-agree-with-licenses --recommends ShellCheck
 
     # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
     echo "Installing VScode..."
     sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
     sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/zypp/repos.d/vscode.repo'
-    sudo zypper -q refresh
-    sudo zypper -q install code
+    sudo zypper -n -q -i refresh
+    sudo zypper -n -q -i install code
 
     # TODO: this will probably fail on many of these
     for i in "${useful_tools[@]}"; do
-        sudo zypper install "$i"
+        sudo zypper -n -q -i install -l --recommends --force-resolution "$i"
     done
-
-    sudo zypper clean
-
-    # TODO: bash bashrc
+    sudo zypper -n -q -i clean
 
 elif [ $FREEBSD ]; then
     echo "Running setup for FreeBSD. This is probably a firewall or router. You poor soul."
