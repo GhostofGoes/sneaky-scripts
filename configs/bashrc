@@ -79,11 +79,11 @@ fi
 shopt -s histappend
 # Append commands to the history every time a prompt is shown, instead of after closing the session
 PROMPT_COMMAND='history -a'
-export HISTCONTROL="ignoredups"
-export HISTIGNORE="clear:history"
+HISTCONTROL="ignoredups"
+HISTIGNORE="clear:history"
 # Unset for unlimited history
-export HISTSIZE=
-export HISTFILESIZE=
+HISTSIZE=
+HISTFILESIZE=
 
 # Make shell work a little better (https://www.gnu.org/software/bash/manual/bash.html#index-shopt)
 shopt -s checkhash checkwinsize
@@ -120,7 +120,7 @@ man() {
 
 # enable colors in less
 # -R or --RAW-CONTROL-CHARS
-export LESS=-R
+# export LESS=-R
 
 # Python better-exceptions: https://github.com/Qix-/better-exceptions
 export BETTER_EXCEPTIONS=1
