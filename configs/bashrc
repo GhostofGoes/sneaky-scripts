@@ -58,10 +58,12 @@ if [ $WSL ]; then
     # Windows username can differ from user in WSL
     WINUSER=$( whoami.exe | cut -d '\' -f2 | tr -d '[:space:]')
     export WINUSER
-    alias winhome='cd /mnt/c/Users/"$WINUSER"/'
-    alias windocs='cd /mnt/c/Users/"$WINUSER"/Documents/'
-    # Fix "ssh-add"
-    eval "$(ssh-agent -s) >/dev/null 2>&1"
+    WINHOME='/mnt/c/Users/"$WINUSER"/'
+    export WINHOME
+    alias whome='cd $WINHOME'
+    alias wdocs='cd $WINHOME/Documents/'
+    # Fix the "could not connect to agent" issue with ssh-add
+    eval "$(ssh-agent -s)" > /dev/null 2>&1
 elif [ $DARWIN ]; then
     alias shutdown="sudo shutdown -hP now"
     alias reboot="sudo reboot now"
