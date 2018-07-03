@@ -24,9 +24,6 @@ function yum_vscode() {
     sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 }
 
-# Profile the OS
-os_type
-
 useful_tools=(
     'tcpdump'       # Capture network traffic
     'tshark'        # Command-line Wireshark
@@ -53,6 +50,9 @@ useful_tools=(
     'direnv'    # Shell environment switcher (https://direnv.net/)
 
     'unzip'
+    'zip'
+    'lsof'
+    'strace'
     'dos2unix'
     'tree'
     'git'
@@ -60,9 +60,25 @@ useful_tools=(
     'wget'
     'curl'
 
+    'cowsay'
+    'neofetch'  # Nice pretty CLI output of system information
+
     'jq'        # Command line JSON tool (https://stedolan.github.io/jq/)
     'ripgrep'   # Recursive grep/find thing (https://github.com/BurntSushi/ripgrep)
-    'cppcheck'  # C++ static code analyzer (https://github.com/danmar/cppcheck)
+    'cppcheck'  # C++ static code analyzer (https://github.com/danmar/cppcheck) 
+)
+
+apt_packages = (
+    'python3-pip'
+    'python-pip'
+    'build-essential'
+    'shellcheck'
+    'net-tools'  # ipconfig, arp, etc.
+    'geoip-bin'
+    'gddrescue'  # ddrescue
+    'apt-transport-https'
+    'ca-certificates'
+    'software-properties-common'  # Needed for Docker
 )
 
 
@@ -88,6 +104,12 @@ useful_tools=(
 # TODO: cleanup the output and messages
 
 
+# Script settings (TODO)
+# Load from a default named file, and/or file specified as argument
+
+# Profile the OS
+os_type
+
 if [ $DARWIN ]; then
     echo "I don't use OSX, sorry. If you put stuff here, please submit a PR or something."
 
@@ -95,18 +117,13 @@ elif [ $DEBIAN ]; then
     echo "Running setup for Debian or some impure Debian-derivative, like Ubuntu or Kali. "
     # Update package cache, upgrade packages, and cleanup
     sudo apt-get update -y -qq
-    sudo apt-get upgrade -y
-    sudo apt-get dist-upgrade -y
-    sudo apt-get autoremove -y
+    sudo apt-get upgrade -y -qq
+    sudo apt-get dist-upgrade -y -qq
+    sudo apt-get autoremove -y -qq
 
-    sudo apt-get install -y -q python3-pip
-    sudo apt-get install -y -q python-pip
-    sudo apt-get install -y -q build-essential
-    sudo apt-get install -y -q shellcheck
-    sudo apt-get install -y -q net-tools  # ipconfig, arp, etc.
-    sudo apt-get install -y -q geoip-bin
-    sudo apt-get install -y -q gddrescue  # ddrescue
-    sudo apt-get install -y -q apt-transport-https ca-certificates software-properties-common
+    for i in "${apt_packages[@]}"; do
+        sudo apt-get install -y -qq "$i"
+    done
 
     # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
     curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
@@ -211,9 +228,16 @@ elif [ $FREEBSD ]; then
     for i in "${useful_tools[@]}"; do
         sudo pkg install "$i"
     done
-
-
     sudo pkg autoremove
+fi
+
+# Create .ssh directory if it doesn't exist
+mkdir -pv "~/.ssh/"
+if [ $WSL ] ; then
+    WINUSER=$( whoami.exe | cut -d '\' -f2 | tr -d '[:space:]')
+    if [ -d "/mnt/c" ]; then
+        mkdir -pv '/mnt/c/Users/"$WINUSER"/.ssh/'
+    fi
 fi
 
 if ! python3 -m pip; then
