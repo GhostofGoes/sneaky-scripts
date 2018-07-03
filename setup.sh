@@ -138,7 +138,12 @@ apt_packages=(
 
 # Script settings (TODO)
 # Load from a default named file, and/or file specified as argument
+TZ="Amercia/Denver"  # Pro tip: if you don't live in Arizona, don't use America/Phoenix. There be dragons.
+INSTALL_PY3_PACKAGES=true
+INSTALL_PY2_PACKAGES=false
 INSTALL_VSCODE=true
+INSTALL_DOCKER=true
+INSTALL_GITLFS=true
 
 # Profile the OS
 os_type
@@ -251,40 +256,49 @@ if [ $WSL ] ; then
     fi
 fi
 
-if ! python3 -m pip; then
+# Install Python packages
+if [ $INSTALL_PY3_PACKAGES ] ; then
+    echo "Installing Python 3 packages..."
+    if ! python3 -m pip; then
     echo "Python 3 pip isn't installed. Installing..."
     python3 -m ensurepip
+    fi
+    while read -r py_package; do
+        python3 -m pip install --user "$py_package"
+    done < ../python-packages.txt
 fi
-
-if ! python -m pip; then
-    echo "Python 2 pip isn't installed. Installing..."
-    python -m ensurepip
+if [ $INSTALL_PY2_PACKAGES ] ; then
+    echo "Installing Python 2 packages..."
+    if ! python -m pip; then
+        echo "Python 2 pip isn't installed. Installing..."
+        python -m ensurepip
+    fi
+    while read -r py_package; do
+        python -m pip install --user "$py_package"
+    done < ../python-packages.txt
 fi
-
-# Install Python packages
-echo "Installing Python 3 packages..."
-while read -r py_package; do
-    python3 -m pip install --user "$py_package"
-done < ../python-packages.txt
 
 # Install Docker
-echo "Installing Docker..."
-curl -fsSL get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
-sudo usermod -aG docker "$USER"
+if [ $INSTALL_DOCKER ] ; then
+    echo "Installing Docker..."
+    curl -fsSL get.docker.com -o get-docker.sh
+    sudo sh get-docker.sh
+    sudo usermod -aG docker "$USER"
+fi
 
 # Install git-lfs
 # TODO: method to determine latest version
-LFSVERSION="2.4.2"
-echo "Installing git-lfs $LFSVERSION..."
-wget https://github.com/git-lfs/git-lfs/releases/download/v"$LFSVERSION"/git-lfs-linux-amd64-"$LFSVERSION".tar.gz
-tar -C ./ -xf git-lfs-linux-amd64-"$LFSVERSION".tar.gz
-rm -f git-lfs-linux-amd64-"$LFSVERSION".tar.gz
-pushd ./git-lfs-"$LFSVERSION" > /dev/null
-sudo ./install.sh
-popd > /dev/null
-rm -rf "./git-lfs-$LFSVERSION/"
-
+if [ $INSTALL_GITLFS ] ; then
+    LFSVERSION="2.4.2"
+    echo "Installing git-lfs $LFSVERSION..."
+    wget https://github.com/git-lfs/git-lfs/releases/download/v"$LFSVERSION"/git-lfs-linux-amd64-"$LFSVERSION".tar.gz
+    tar -C ./ -xf git-lfs-linux-amd64-"$LFSVERSION".tar.gz
+    rm -f git-lfs-linux-amd64-"$LFSVERSION".tar.gz
+    pushd ./git-lfs-"$LFSVERSION" > /dev/null
+    sudo ./install.sh
+    popd > /dev/null
+    rm -rf "./git-lfs-$LFSVERSION/"
+fi
 
 # Install Visual Studio Code. Skip if we're in WSL.
 if [ $INSTALL_VSCODE ] && [ ! $WSL ] && [ "$(command -v code > /dev/null)" -eq 1 ] ; then
