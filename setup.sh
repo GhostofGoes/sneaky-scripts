@@ -91,6 +91,7 @@ useful_tools=(
     'make'
     'wget'
     'curl'
+    'ssh'       # Debian on WSL doesn't include SSH by default
 
     'cowsay'
     'neofetch'  # Nice pretty CLI output of system information
