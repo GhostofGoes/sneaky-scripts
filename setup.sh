@@ -118,16 +118,10 @@ apt_packages=(
 # TODO List:
 # [ ] Configure proxy if set
 # [ ] Configure vscode
-# [ ] Configure PyCharm with desktop icon on Ubuntu
+# [ ] Configure PyCharm with desktop icon on Ubuntu (make sure .desktop file is configured on Ubuntu/Kali)
 # [ ] Raspberry Pi-specific setup
 # [ ] Configure Docker
 # [ ] Timezone configuration
-
-# Programs to add
-#   Firefox
-#   Chrome/Chromium
-#   golang
-#   PyCharm
 
 # Features
 #   Detect Ubuntu
@@ -135,6 +129,25 @@ apt_packages=(
 
 # TODO: Flag for non-desktop runs to not include graphical programs like VScode
 # TODO: cleanup the output and messages
+# TODO: JSON/txt file with apps?
+
+# TODO: only install common programs if they're not already installed
+#   ssh, locate, zip, unzip, curl, wget, nano
+
+# Graphical apps: 
+#   Gedit, PyCharm, browsers, Terminator, Wireshark, DB Browser for SQL, Remmina (RDP client)
+#   Private Internet Access (PIA), KeePass, Steam, Spotify, VLC player, TexWorks/TexStudio, Dropbox
+#   VirtualBox, VMware, Discord
+
+# Settings + Flags + Themes + Plugins/Extensions for graphical apps
+#   Chrome, Firefox, PyCharm, VScode
+
+# CLI/etc apps:
+#   LaTeX, Vagrant, golang
+
+# TODO:
+# ~/.curlrc
+# ~/.wgetrc
 
 
 # Script settings (TODO)
@@ -305,6 +318,9 @@ fi
 if [ $INSTALL_VSCODE ] && [ ! $WSL ] && [ "$(command -v code > /dev/null)" -eq 1 ] ; then
     install_vscode
 fi
+
+# Update the locate database
+sudo updatedb
 
 # Install configs
 source ./configure.sh
