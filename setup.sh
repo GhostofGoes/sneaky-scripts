@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Source: https://unix.stackexchange.com/a/41735
-function os_type() {
+os_type() {
 case $(uname) in
   Linux )
      command -v cmd.exe > /dev/null && { WSL=1; echo "Windows Subsystem for Linux detected"; }
@@ -20,7 +20,7 @@ esac
 }
 
 # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
-function install_vscode() {
+install_vscode() {
     echo "Installing VScode..."
     if [ $DEBIAN ] ; then
         curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
@@ -51,7 +51,7 @@ function install_vscode() {
     echo "Finished installing VScode"
 }
 
-function yum_vscode() {
+yum_vscode() {
     sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
     sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 }
