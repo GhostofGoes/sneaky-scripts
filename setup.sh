@@ -59,8 +59,7 @@ yum_vscode() {
 useful_tools=(
     'tcpdump'       # Capture network traffic
     'tshark'        # Command-line Wireshark
-    'wireshark'     # The penultimate network analysis toolkit
-    'wireshark-doc' # Documentation for the above
+
     'snmp'          # snmpwalk and friends
     'snmp-mibs-downloader'  # SNMP MIBS
     'nmap'          # Network mapping/scanning
@@ -72,6 +71,7 @@ useful_tools=(
     'iptraf'      # Interactive Colorful IP LAN Monitor
     'nethogs'     # Net top tool grouping bandwidth per process
     'whois'       # Who are you? (Yeah, this isn't installed by default...)
+    'arping'      # ARP ping
 
     'cloc'      # Count lines of code
     'nano'      # Life's not complete without Nano
@@ -80,25 +80,36 @@ useful_tools=(
     'glances'   # Graphical resource monitoring tool
     'ncdu'      # Graphical view of directory sizes in terminal, using NCurses
     'direnv'    # Shell environment switcher (https://direnv.net/)
-
+    
+    'locate'
+    'xclip'     # Pipes input to the clipboard
     'unzip'
     'zip'
     'lsof'
-    'strace'
-    'dos2unix'
+    'strace'    # Useful for debugging
+    'dos2unix'  # Convert /r/n (Windows) file endings to /n (Linux)
     'tree'
-    'git'
+    'git'       # Git version control system
     'make'
     'wget'
     'curl'
+    'grep'      # Text search
+    'sed'       # Stream editor
     'ssh'       # Debian on WSL doesn't include SSH by default
 
-    'cowsay'
+    'cowsay'    # Moooo
     'neofetch'  # Nice pretty CLI output of system information
 
     'jq'        # Command line JSON tool (https://stedolan.github.io/jq/)
     'ripgrep'   # Recursive grep/find thing (https://github.com/BurntSushi/ripgrep)
     'cppcheck'  # C++ static code analyzer (https://github.com/danmar/cppcheck) 
+)
+
+gui_tools=(
+    'wireshark'     # The penultimate network analysis toolkit
+    'wireshark-doc' # Documentation for the above
+    'zenmap'
+    'terminator'
 )
 
 apt_packages=(
@@ -132,10 +143,10 @@ apt_packages=(
 # TODO: JSON/txt file with apps?
 
 # TODO: only install common programs if they're not already installed
-#   ssh, locate, zip, unzip, curl, wget, nano
+#   ssh, locate, zip, unzip, curl, wget, nano, grep, sed
 
 # Graphical apps: 
-#   Gedit, PyCharm, browsers, Terminator, Wireshark, DB Browser for SQL, Remmina (RDP client)
+#   Gedit, PyCharm, browsers, DB Browser for SQL, Remmina (RDP client)
 #   Private Internet Access (PIA), KeePass, Steam, Spotify, VLC player, TexWorks/TexStudio, Dropbox
 #   VirtualBox, VMware, Discord
 
@@ -148,7 +159,7 @@ apt_packages=(
 # TODO:
 # ~/.curlrc
 # ~/.wgetrc
-
+# Terminator config (Example: https://gist.github.com/starenka/1709840)
 
 # Script settings (TODO)
 # Load from a default named file, and/or file specified as argument
@@ -184,7 +195,16 @@ elif [ $DEBIAN ]; then
     for i in "${useful_tools[@]}"; do
         sudo apt-get install -y -qq "$i"
     done
-    sudo apt-get -y -qq clean    
+    
+    if [ ! $WSL ]; then
+        echo "Installing graphical tools..."
+        for i in "${gui_tools[@]}"; do
+            sudo apt-get install -y -qq "$i"
+        done
+        sudo apt-get install -y -qq gedit
+    fi
+
+    sudo apt-get -y -qq clean
 
 elif [ $RHEL ]; then
     echo "Running setup for RHEL/CentOS. I'd put something witty here, but that'd be against corporate policy."
@@ -201,9 +221,17 @@ elif [ $RHEL ]; then
     sudo yum install -y -qq geoip  # geoiplookup 
 
     # TODO: this will probably fail on many of these
+    echo "Installing various useful tools..."
     for i in "${useful_tools[@]}"; do
         sudo yum install -y -qq "$i"
     done
+
+    if [ ! $WSL ]; then
+        echo "Installing graphical tools..."
+        for i in "${gui_tools[@]}"; do
+            sudo yum install -y -qq "$i"
+        done
+    fi
 
 elif [ $FEDORA ]; then
     echo "Running setup for Fedora, the OS we all wish we could run if everyone wasn't Debian-obscessed."
@@ -216,15 +244,25 @@ elif [ $FEDORA ]; then
     sudo dnf install -y -qq geoip
 
     # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
-    echo "Installing VScode..."
-    yum_vscode
-    dnf check-update -y -qq
-    sudo dnf install -y -qq code
+    if [ ! $WSL ]; then
+        echo "Installing VScode..."
+        yum_vscode
+        dnf check-update -y -qq
+        sudo dnf install -y -qq code
+    fi
 
     # TODO: this will probably fail on many of these
+    echo "Installing various useful tools..."
     for i in "${useful_tools[@]}"; do
         sudo dnf install -y -qq "$i"
     done
+
+    if [ ! $WSL ]; then
+        echo "Installing graphical tools..."
+        for i in "${gui_tools[@]}"; do
+            sudo dnf install -y -qq "$i"
+        done
+    fi
 
 elif [ $SUSE ]; then
     echo "Running setup for OpenSUSE. Let's do science! That's what OpenSUSE is for, right? ...right?"
@@ -241,9 +279,17 @@ elif [ $SUSE ]; then
     sudo zypper -n -i install -l --recommends --force-resolution python3
 
     # TODO: this will probably fail on many of these
+    echo "Installing various useful tools..."
     for i in "${useful_tools[@]}"; do
         sudo zypper -n -q -i install -l --recommends --force-resolution "$i"
     done
+
+    if [ ! $WSL ]; then
+        echo "Installing graphical tools..."
+        for i in "${gui_tools[@]}"; do
+            sudo zypper -n -q -i install -l --recommends --force-resolution "$i"
+        done
+    fi
     sudo zypper -n -q -i clean
 
 elif [ $FREEBSD ]; then
@@ -255,13 +301,21 @@ elif [ $FREEBSD ]; then
     sudo pkg upgrade
 
     # TODO: this will probably fail on many of these
+    echo "Installing various useful tools..."
     for i in "${useful_tools[@]}"; do
         sudo pkg install "$i"
     done
+    if [ ! $WSL ]; then
+        echo "Installing graphical tools..."
+        for i in "${gui_tools[@]}"; do
+            sudo pkg install "$i"
+        done
+    fi
     sudo pkg autoremove
 fi
 
 # Create .ssh directory if it doesn't exist
+echo "Configuring SSH..."
 mkdir -pv ~/.ssh/
 if [ $WSL ] ; then
     WINUSER=$( whoami.exe | cut -d '\' -f2 | tr -d '[:space:]')
@@ -293,7 +347,7 @@ if [ $INSTALL_PY2_PACKAGES ] ; then
 fi
 
 # Install Docker
-if [ $INSTALL_DOCKER ] ; then
+if [ $INSTALL_DOCKER ] && [ ! $WSL ] ; then
     echo "Installing Docker..."
     curl -fsSL get.docker.com -o get-docker.sh
     sudo sh get-docker.sh

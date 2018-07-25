@@ -18,7 +18,7 @@ if [ -f /etc/bash_completion ]; then
 fi
 
 # Source: https://unix.stackexchange.com/a/41735
-function os_type() {
+os_type() {
 case $(uname) in
   Linux )
      command -v cmd.exe > /dev/null && { WSL=1; }
