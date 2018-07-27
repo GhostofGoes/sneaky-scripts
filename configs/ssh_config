@@ -3,10 +3,10 @@ Host github.com
     Hostname github.com
     User git
     PreferredAuthentications publickey
-    IdentityFile /home/user/.ssh/github_key
+    IdentityFile ~/.ssh/github_key
 
 Host gitlab.com
     Hostname gitlab.com
     User git
     PreferredAuthentications publickey
-    IdentityFile /home/user/.ssh/gitlab_key
+    IdentityFile ~/.ssh/gitlab_key
