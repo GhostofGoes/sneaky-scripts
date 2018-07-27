@@ -127,6 +127,7 @@ apt_packages=(
 
 
 # TODO List:
+# [ ] MAKE RE-RUNNABLE! If the desired configs already exist, don't append them again.
 # [ ] Configure proxy if set
 # [ ] Configure vscode
 # [ ] Configure PyCharm with desktop icon on Ubuntu (make sure .desktop file is configured on Ubuntu/Kali)
@@ -160,6 +161,9 @@ apt_packages=(
 # ~/.curlrc
 # ~/.wgetrc
 # Terminator config (Example: https://gist.github.com/starenka/1709840)
+# pyenv (not to be confused with pipenv)
+# pyenv-virtualenv and/or pyenv-virtualenvwrapper
+# virtualenvwrapper
 
 # Script settings (TODO)
 # Load from a default named file, and/or file specified as argument
@@ -189,13 +193,11 @@ elif [ $DEBIAN ]; then
     for i in "${apt_packages[@]}"; do
         sudo apt-get install -y -qq "$i"
     done
-
     # TODO: generalize this and just swap out the package manager? (the 'p' thing I saw maybe?)
     echo "Installing various useful tools..."
     for i in "${useful_tools[@]}"; do
         sudo apt-get install -y -qq "$i"
     done
-    
     if [ ! $WSL ]; then
         echo "Installing graphical tools..."
         for i in "${gui_tools[@]}"; do
@@ -203,7 +205,6 @@ elif [ $DEBIAN ]; then
         done
         sudo apt-get install -y -qq gedit
     fi
-
     sudo apt-get -y -qq clean
 
 elif [ $RHEL ]; then
@@ -314,15 +315,24 @@ elif [ $FREEBSD ]; then
     sudo pkg autoremove
 fi
 
+echo "Configuring Timezone..."
+sudo timedatectl set-timezone $TZ > /dev/null
+if [ $? -eq 1 ] ; then
+    echo "(WARNING) Failed to configure timezone: timedatectl failed to run"
+fi
+
 # Create .ssh directory if it doesn't exist
-echo "Configuring SSH..."
+echo "Creating .ssh directory..."
 mkdir -pv ~/.ssh/
 if [ $WSL ] ; then
+    export $WSL
     WINUSER=$( whoami.exe | cut -d '\' -f2 | tr -d '[:space:]')
-    if [ -d "/mnt/c" ]; then
+    export $WINUSER
+    if [ -d "/mnt/c" ] ; then
         mkdir -pv "/mnt/c/Users/{$WINUSER}/.ssh/"
     fi
 fi
+
 
 # Install Python packages
 if [ $INSTALL_PY3_PACKAGES ] ; then
@@ -358,8 +368,9 @@ fi
 # TODO: method to determine latest version
 if [ $INSTALL_GITLFS ] ; then
     LFSVERSION="2.4.2"
-    echo "Installing git-lfs $LFSVERSION..."
+    echo "Downloading git-lfs $LFSVERSION..."
     wget https://github.com/git-lfs/git-lfs/releases/download/v"$LFSVERSION"/git-lfs-linux-amd64-"$LFSVERSION".tar.gz
+    echo "Installing git-lfs $LFSVERSION..."
     tar -C ./ -xf git-lfs-linux-amd64-"$LFSVERSION".tar.gz
     rm -f git-lfs-linux-amd64-"$LFSVERSION".tar.gz
     pushd ./git-lfs-"$LFSVERSION" > /dev/null
@@ -374,7 +385,9 @@ if [ $INSTALL_VSCODE ] && [ ! $WSL ] && [ "$(command -v code > /dev/null)" -eq 1
 fi
 
 # Update the locate database
+echo "Updating the 'locate' database..."
 sudo updatedb
 
 # Install configs
+echo "Installing custom configurations (.bashrc, .gitconfig, etc.) ..."
 source ./configure.sh
