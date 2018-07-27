@@ -13,3 +13,4 @@ PyYAML
 psutil
 cookiecutter
 cowsay
+pipenv
