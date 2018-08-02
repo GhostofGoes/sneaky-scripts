@@ -139,7 +139,6 @@ apt_packages=(
 #   Detect Ubuntu
 #   Detect pacman (Arch, MSYS)
 
-# TODO: Flag for non-desktop runs to not include graphical programs like VScode
 # TODO: cleanup the output and messages
 # TODO: JSON/txt file with apps?
 
@@ -164,6 +163,7 @@ apt_packages=(
 # pyenv (not to be confused with pipenv)
 # pyenv-virtualenv and/or pyenv-virtualenvwrapper
 # virtualenvwrapper
+# Compile and install latest version of shellcheck
 
 # Script settings (TODO)
 # Load from a default named file, and/or file specified as argument
