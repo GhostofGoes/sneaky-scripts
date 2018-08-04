@@ -51,11 +51,6 @@ install_vscode() {
     echo "Finished installing VScode"
 }
 
-yum_vscode() {
-    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-    sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-}
-
 useful_tools=(
     'tcpdump'       # Capture network traffic
     'tshark'        # Command-line Wireshark
@@ -244,14 +239,6 @@ elif [ $FEDORA ]; then
     sudo dnf install -y -qq ShellCheck
     sudo dnf install -y -qq geoip
 
-    # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
-    if [ ! $WSL ]; then
-        echo "Installing VScode..."
-        yum_vscode
-        dnf check-update -y -qq
-        sudo dnf install -y -qq code
-    fi
-
     # TODO: this will probably fail on many of these
     echo "Installing various useful tools..."
     for i in "${useful_tools[@]}"; do
@@ -335,7 +322,7 @@ fi
 
 
 # Install Python packages
-if [ $INSTALL_PY3_PACKAGES ] ; then
+if [ "$INSTALL_PY3_PACKAGES" = true ] ; then
     echo "Installing Python 3 packages..."
     if ! python3 -m pip; then
     echo "Python 3 pip isn't installed. Installing..."
@@ -345,7 +332,7 @@ if [ $INSTALL_PY3_PACKAGES ] ; then
         python3 -m pip install --user "$py_package"
     done < ../python-packages.txt
 fi
-if [ $INSTALL_PY2_PACKAGES ] ; then
+if [ "$INSTALL_PY2_PACKAGES" = true ] ; then
     echo "Installing Python 2 packages..."
     if ! python -m pip; then
         echo "Python 2 pip isn't installed. Installing..."
@@ -357,16 +344,17 @@ if [ $INSTALL_PY2_PACKAGES ] ; then
 fi
 
 # Install Docker
-if [ $INSTALL_DOCKER ] && [ ! $WSL ] ; then
+if [ "$INSTALL_DOCKER" = true ] && [ ! $WSL ] ; then
     echo "Installing Docker..."
     curl -fsSL get.docker.com -o get-docker.sh
     sudo sh get-docker.sh
     sudo usermod -aG docker "$USER"
+    rm -f get-docker.sh
 fi
 
 # Install git-lfs
 # TODO: method to determine latest version
-if [ $INSTALL_GITLFS ] ; then
+if [ "$INSTALL_GITLFS" = true ] ; then
     LFSVERSION="2.4.2"
     echo "Downloading git-lfs $LFSVERSION..."
     wget https://github.com/git-lfs/git-lfs/releases/download/v"$LFSVERSION"/git-lfs-linux-amd64-"$LFSVERSION".tar.gz
@@ -380,7 +368,7 @@ if [ $INSTALL_GITLFS ] ; then
 fi
 
 # Install Visual Studio Code. Skip if we're in WSL.
-if [ $INSTALL_VSCODE ] && [ ! $WSL ] && [ "$(command -v code > /dev/null)" -eq 1 ] ; then
+if [ "$INSTALL_VSCODE" = true ] && [ ! $WSL ] && [ "$(command -v code > /dev/null)" -eq 1 ] ; then
     install_vscode
 fi
 
