@@ -15,5 +15,5 @@ cat ./configs/ssh_config >> ~/.ssh/config
 
 if [ $WSL ] ; then
     echo "Installing SSH key for WSL..."
-    cat ./configs/ssh_config >> "/mnt/c/Users/{$WINUSER}/.ssh/config"
+    cat ./configs/ssh_config >> "/mnt/c/Users/${WINUSER}/.ssh/config"
 fi
