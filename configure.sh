@@ -13,7 +13,10 @@ cat ./configs/bashrc >> ~/.bashrc
 cat ./configs/gitconfig >> ~/.gitconfig
 cat ./configs/ssh_config >> ~/.ssh/config
 
+chmod 644 ~/.ssh/config
+
 if [ $WSL ] ; then
     echo "Installing SSH key for WSL..."
     cat ./configs/ssh_config >> "/mnt/c/Users/${WINUSER}/.ssh/config"
+    chmod 644 "/mnt/c/Users/${WINUSER}/.ssh/config"
 fi
