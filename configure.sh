@@ -10,10 +10,12 @@ cat ./configs/bash_aliases >> ~/.bash_aliases
 cat ./configs/bash_profile >> ~/.bash_profile
 cat ./configs/profile >> ~/.profile
 cat ./configs/bashrc >> ~/.bashrc
-cat ./configs/gitconfig >> ~/.gitconfig
-cat ./configs/ssh_config >> ~/.ssh/config
 
+cat ./configs/ssh_config >> ~/.ssh/config
 chmod 644 ~/.ssh/config
+
+sudo chown "$USER":"$USER" ~/.gitconfig
+cat ./configs/gitconfig >> ~/.gitconfig
 
 if [ $WSL ] ; then
     echo "Installing SSH key for WSL..."

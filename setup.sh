@@ -312,9 +312,9 @@ fi
 echo "Creating .ssh directory..."
 mkdir -pv ~/.ssh/
 if [ $WSL ] ; then
-    export $WSL
+    export WSL
     WINUSER=$( whoami.exe | cut -d '\' -f2 | tr -d '[:space:]')
-    export $WINUSER
+    export WINUSER
     if [ -d "/mnt/c" ] ; then
         mkdir -pv "/mnt/c/Users/{$WINUSER}/.ssh/"
     fi
@@ -325,12 +325,12 @@ fi
 if [ "$INSTALL_PY3_PACKAGES" = true ] ; then
     echo "Installing Python 3 packages..."
     if ! python3 -m pip; then
-    echo "Python 3 pip isn't installed. Installing..."
-    python3 -m ensurepip
+        echo "Python 3 pip isn't installed. Installing..."
+        python3 -m ensurepip
     fi
     while read -r py_package; do
         python3 -m pip install --user "$py_package"
-    done < ../python-packages.txt
+    done < python-packages.txt
 fi
 if [ "$INSTALL_PY2_PACKAGES" = true ] ; then
     echo "Installing Python 2 packages..."
@@ -340,7 +340,7 @@ if [ "$INSTALL_PY2_PACKAGES" = true ] ; then
     fi
     while read -r py_package; do
         python -m pip install --user "$py_package"
-    done < ../python-packages.txt
+    done < python-packages.txt
 fi
 
 # Install Docker
@@ -349,7 +349,7 @@ if [ "$INSTALL_DOCKER" = true ] && [ ! $WSL ] ; then
     curl -fsSL get.docker.com -o get-docker.sh
     sudo sh get-docker.sh
     sudo usermod -aG docker "$USER"
-    rm -f get-docker.sh
+    rm -f "get-docker.sh"
 fi
 
 # Install git-lfs
