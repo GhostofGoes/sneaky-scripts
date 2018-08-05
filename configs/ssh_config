@@ -1,3 +1,8 @@
+Host gist.github.com
+	Hostname gist.github.com
+    User git
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/github_key
 
 Host github.com
     Hostname github.com
