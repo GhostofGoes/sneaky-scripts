@@ -1,0 +1,22 @@
+* text=auto
+
+# Linux
+*.bash text eol=lf
+*.sh text eol=lf
+bash_* text eol=lf
+bashrc text eol=lf
+gitconfig  text eol=lf
+profile  text eol=lf
+ssh_config  text eol=lf
+
+# Windows
+*.ps1 text eol=crlf
+*.cmd text eol=crlf
+*.preset text eol=crlf
+
+# General
+*.py text
+*.txt text
+*.md text
+*.rst text
+*.json text eol=lf
