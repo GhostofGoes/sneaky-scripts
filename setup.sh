@@ -51,6 +51,37 @@ install_vscode() {
     echo "Finished installing VScode"
 }
 
+install_package() {
+    echo "Installing package $i..."
+    if [ $DEBIAN ] ; then
+        sudo apt-get install -y -qq "$1"
+    elif [ $FEDORA ] ; then
+        sudo dnf install -y -qq "$1"
+    elif [ $RHEL ] ; then
+        sudo yum install -y -qq "$1"
+    elif [ $SUSE ] ; then
+        sudo zypper install -n -q -i install --auto-agree-with-licenses --force-resolution "$1"
+    elif [ $FREEBSD ] ; then
+        sudo pkg install "$i"
+    fi
+}
+
+uninstall_package() {
+    echo "Uninstalling package $i..."
+    if [ $DEBIAN ] ; then
+        sudo apt-get remove -y -qq "$1"
+    elif [ $FEDORA ] ; then
+        sudo dnf remove -y -qq "$1"
+    elif [ $RHEL ] ; then
+        sudo yum remove -y -qq "$1"
+    elif [ $SUSE ] ; then
+        sudo zypper -n -q -i rm "$1"
+    elif [ $FREEBSD ] ; then
+        sudo pkg delete "$i"
+    fi
+}
+
+
 useful_tools=(
     'tcpdump'       # Capture network traffic
     'tshark'        # Command-line Wireshark
@@ -370,6 +401,19 @@ fi
 # Install Visual Studio Code. Skip if we're in WSL.
 if [ "$INSTALL_VSCODE" = true ] && [ ! $WSL ] && [ "$(command -v code > /dev/null)" -eq 1 ] ; then
     install_vscode
+fi
+
+# Install Shellcheck
+if [ "$INSTALL_SHELLCHECK" = true ] ; then
+    echo "Compiling and installing the latest version of ShellCheck..."
+    install_package "cabal-install"
+    cabal update
+    git clone https://github.com/koalaman/shellcheck.git
+    pushd ./shellcheck/ > /dev/null
+    cabal install --enable-tests > /dev/null
+    popd > /dev/null
+    remove_package "shellcheck"
+    echo "Finished installing ShellCheck"
 fi
 
 # Update the locate database
