@@ -135,3 +135,6 @@ PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;3
 
 # Used if you compile the latest version of ShellCheck (which I generally do)
 export PATH="$HOME/.cabal/bin:$PATH"
+
+# Pipenv shell completions
+eval "$(pipenv --completion)"
