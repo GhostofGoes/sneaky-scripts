@@ -15,8 +15,8 @@ ssh_config  text eol=lf
 *.preset text eol=crlf
 
 # General
-*.py text
-*.txt text
-*.md text
-*.rst text
-*.json text eol=lf
+*.py    text eol=lf
+*.txt   text eol=lf
+*.md    text eol=lf
+*.rst   text eol=lf
+*.json  text eol=lf
