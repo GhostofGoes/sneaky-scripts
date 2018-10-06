@@ -38,10 +38,12 @@ esac
 }
 os_type
 
+# Installed packages
 if [ $JUST_APT ]; then
     alias update="sudo apt -y update"
     alias upgrade="sudo apt -y update && sudo apt upgrade"
     alias full-upgrade="sudo apt -y update && sudo apt full-upgrade"
+    alias installed="apt list --installed"
 elif [ $APT_GET ]; then
     alias update="sudo apt-get -y update"
     alias upgrade="sudo apt-get -y update && sudo apt-get upgrade"
@@ -49,8 +51,10 @@ elif [ $APT_GET ]; then
 elif [ $FEDORA ]; then
     alias update="dnf -y check-update"
     alias upgrade="sudo dnf -y upgrade"
+    alias installed="rpm -qa --last"
 elif [ $RHEL  ]; then
     alias update="sudo yum update"
+    alias installed="rpm -qa --last"
 fi
 
 # Windows Subsystem for Linux (WSL)
