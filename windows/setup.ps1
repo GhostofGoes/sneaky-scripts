@@ -1,12 +1,14 @@
 # NOTE: This must be run as an Administrator!
 
+# Configurations
+$colorscheme = "OneHalfDark"
+
 # Relaunch the script with administrator privileges
 If (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator")) {
     Write-Host -ForegroundColor Red "Relaunching script with Administrator privileges..."
     Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" $PSCommandArgs" -WorkingDirectory $pwd -Verb RunAs
     Exit
 }
-
 
 # OS Metadata
 $wmi = Get-WmiObject -Class Win32_OperatingSystem
@@ -17,6 +19,9 @@ Write-Host -ForegroundColor DarkGreen "Install Date : " $wmi.ConvertToDateTime($
 # Update PowerShell's built-in help modules
 Write-Host -ForegroundColor DarkGreen "Updating PowerShell's help modules..."
 Update-Help
+
+Write-Host -ForegroundColor DarkGreen "Changing color scheme to $colorscheme"
+.\ColorTool\ColorTool.exe --quiet --defaults $colorscheme
 
 # Run Disassembler0's Win10/Server2016 setup script (https://github.com/Disassembler0/Win10-Initial-Setup-Script)
 if ([System.Environment]::OSVersion.Version.Major -eq "10") {
