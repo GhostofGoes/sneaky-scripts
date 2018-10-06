@@ -2,55 +2,71 @@
 
 RequireAdmin
 
-# Privacy Settings
+
+# Privacy Tweaks
 DisableTelemetry
 DisableWiFiSense
 # "DisableSmartScreen"
 DisableWebSearch
 DisableAppSuggestions
-DisableBackgroundApps
+DisableBackgroundApps  # If apps can download or update when they aren't used
 DisableLockScreenSpotlight
 DisableLocationTracking
 DisableMapUpdates
 DisableFeedback
+DisableTailoredExperiences
 DisableAdvertisingID
+DisableWebLangList
 DisableCortana
 DisableErrorReporting
 SetP2PUpdateLocal
-DisableAutoLogger
 DisableDiagTrack
 DisableWAPPush
 
-# Service Tweaks
+
+# Security Tweaks
 # SetUACLow
-# EnableSharingMappedDrives
-# DisableAdminShares
+DisableSharingMappedDrives
+DisableAdminShares
 DisableSMB1
+DisableSMBServer
+# DisableLLMNR  # Disable Link-Local Multicast Name Resolution (LLMNR) protocol
+# DisableNCSIProbe  # Disable network connectivity test
 # SetCurrentNetworkPrivate
 # SetUnknownNetworksPrivate
 DisableNetDevicesAutoInst
-EnableCtrldFolderAccess
-# DisableFirewall
-# DisableDefender
+# EnableFirewall
+# EnableDefender
 # DisableDefenderCloud
+# EnableCtrldFolderAccess  # Controlled Folder Access (Defender Exploit Guard feature)
+EnableCIMemoryIntegrity
+EnableDefenderAppGuard
+HideAccountProtectionWarn
+# DisableScriptHost
+EnableDotNetStrongCrypto
+
+
+# Service Tweaks
 # DisableUpdateMSRT
 # DisableUpdateDriver
 DisableUpdateRestart
 DisableHomeGroups
 DisableSharedExperiences
 DisableRemoteAssistance
-# EnableRemoteDesktop
+# DisableRemoteDesktop
 DisableAutoplay
 DisableAutorun
 EnableStorageSense
 # DisableDefragmentation
 # DisableSuperfetch
 # DisableIndexing
+# DisableNTFSLastAccess
 # SetBIOSTimeUTC
-# EnableHibernation
-# DisableSleepButton
+# DisableHibernation
+# DisableSleepButton  # Disable Sleep start menu and keyboard button
 # DisableSleepTimeout
 # DisableFastStartup
+
 
 # UI Tweaks
 # DisableActionCenter
@@ -58,6 +74,7 @@ EnableStorageSense
 # DisableLockScreenRS1
 # HideNetworkFromLockScreen
 # HideShutdownFromLockScreen
+DisableAeroShake
 DisableStickyKeys
 ShowTaskManagerDetails
 ShowFileOperationsDetails
@@ -68,64 +85,57 @@ HideTaskView
 # ShowTaskbarTitles
 HideTaskbarPeopleIcon
 # ShowTrayIcons
+DisableSearchAppInStore
+# DisableNewAppPrompt  # Disable 'How do you want to open this file?' prompt
+SetControlPanelLargeIcons
+
+
+# Explorer Tweaks
 ShowKnownExtensions
 ShowHiddenFiles
-# HideSyncNotifications
-# HideRecentShortcuts
+EnableFldrSeparateProcess
+DisableSharingWizard
+HideSelectCheckboxes
 SetExplorerThisPC
+ShowQuickAccess
 ShowThisPCOnDesktop
 ShowUserFolderOnDesktop
-# HideDesktopFromThisPC
-# HideDesktopFromExplorer
-# HideDocumentsFromThisPC
-# HideDocumentsFromExplorer
-# HideDownloadsFromThisPC
-# HideDownloadsFromExplorer
-HideMusicFromThisPC
+# HideMusicFromThisPC
 # HideMusicFromExplorer
 # HidePicturesFromThisPC
 # HidePicturesFromExplorer
-HideVideosFromThisPC
+# HideVideosFromThisPC
 # HideVideosFromExplorer
 Hide3DObjectsFromThisPC
 Hide3DObjectsFromExplorer
-# SetControlPanelViewIcons
-# SetVisualFXPerformance
-# DisableThumbnails
-# DisableThumbsDB
-# AddENKeyboard
-# EnableNumlock
+HideIncludeInLibraryMenu
+HideGiveAccessToMenu
+HideShareMenu
+
 
 # Application Tweaks
 DisableOneDrive
 UninstallOneDrive
 UninstallMsftBloat
 UninstallThirdPartyBloat
-# UninstallWindowsStore
 # DisableXboxFeatures
-DisableAdobeFlash
+# DisableAdobeFlash
+DisableEdgeShortcutCreation
 # UninstallMediaPlayer
-# UninstallWorkFolders
-InstallLinuxSubsystem
+UninstallWorkFolders
+# InstallLinuxSubsystem
 # InstallHyperV
-SetPhotoViewerAssociation
+# InstallNET23
+# SetPhotoViewerAssociation
 AddPhotoViewerOpenWith
-DisableSearchAppInStore
-# DisableNewAppPrompt
-# EnableF8BootMenu
-# SetDEPOptOut
-# EnableMeltdownCompatFlag
+UninstallXPSPrinter
+RemoveFaxPrinter
 
-# Server-specific
-# HideServerManagerOnLogin
-# DisableShutdownTracker
-# DisablePasswordPolicy
-# DisableCtrlAltDelLogin
-# DisableIEEnhancedSecurity
 
 # Unpinning
-UnpinStartMenuTiles
-UnpinTaskbarIcons
+# UnpinStartMenuTiles
+# UnpinTaskbarIcons
+
 
 # WaitForKey
 # Restart
