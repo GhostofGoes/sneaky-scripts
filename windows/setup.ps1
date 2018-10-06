@@ -36,7 +36,7 @@ if ([System.Environment]::OSVersion.Version.Major -eq "10") {
     }
 
     # Run setup script with the appropriate preset file
-    powershell.exe -NoProfile -ExecutionPolicy Bypass -File Win10.ps1 -preset $presets_file
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -File Win10.ps1 -include Win10.psm1 -preset $presets_file
 
     Write-Host -ForegroundColor DarkGreen "Win10.ps1 finished"
     Write-Host -ForegroundColor Yellow "You must reboot before some of the configurations will be active."
