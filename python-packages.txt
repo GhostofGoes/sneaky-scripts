@@ -7,10 +7,14 @@ scapy
 virtualenv
 setuptools
 twine
-pudb
 pypinfo
 PyYAML
 psutil
 cookiecutter
 cowsay
 pipenv
+green
+docopt
+pudb;platform_system=='Linux'
+argcomplete;platform_system=='Linux'
+distro;platform_system=='Linux'

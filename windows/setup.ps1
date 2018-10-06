@@ -49,5 +49,5 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File choco.ps1
 
 # Install Python packages
 Get-Content ..\python-packages.txt | ForEach-Object {
-    py -3 -m pip install --user $_
+    py -3 -m pip install --user --upgrade $_
 }
