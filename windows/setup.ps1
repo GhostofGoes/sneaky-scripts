@@ -56,3 +56,6 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File choco.ps1
 Get-Content ..\python-packages.txt | ForEach-Object {
     py -3 -m pip install --user --upgrade $_
 }
+
+# Enable better_exceptions: https://github.com/qix-/better-exceptions#usage
+setx BETTER_EXCEPTIONS 1
