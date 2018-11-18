@@ -22,3 +22,8 @@ if [ $WSL ] ; then
     cat ./configs/ssh_config >> "/mnt/c/Users/${WINUSER}/.ssh/config"
     chmod 644 "/mnt/c/Users/${WINUSER}/.ssh/config"
 fi
+
+if [ $DEBIAN ] ; then
+    echo "Attempting to disable lock screen... (Failures are ignored)"
+    gsettings set org.gnome.desktop.lockdown disable-lock-screen 'true' 2> /dev/null || true
+fi
