@@ -115,7 +115,8 @@ useful_tools=(
     'strace'    # Useful for debugging
     'dos2unix'  # Convert /r/n (Windows) file endings to /n (Linux)
     'tree'
-    'git'       # Git version control system
+    'git'       # The infamous version control system
+    'git-lfs'   # Git Large File System (LFS)
     'make'
     'wget'
     'curl'
@@ -198,7 +199,8 @@ INSTALL_PY3_PACKAGES=true
 INSTALL_PY2_PACKAGES=false
 INSTALL_VSCODE=true
 INSTALL_DOCKER=true
-INSTALL_GITLFS=true
+IS_VM=true
+INSTALL_CONFIGS=false
 
 # Profile the OS
 os_type
@@ -331,6 +333,8 @@ elif [ $FREEBSD ]; then
         done
     fi
     sudo pkg autoremove
+else
+    echo "ERROR: UNKNOWN PLATFORM" && exit 1
 fi
 
 echo "Configuring Timezone..."
@@ -350,7 +354,6 @@ if [ $WSL ] ; then
         mkdir -pv "/mnt/c/Users/{$WINUSER}/.ssh/"
     fi
 fi
-
 
 # Install Python packages
 if [ "$INSTALL_PY3_PACKAGES" = true ] ; then
@@ -377,25 +380,12 @@ fi
 # Install Docker
 if [ "$INSTALL_DOCKER" = true ] && [ ! $WSL ] ; then
     echo "Installing Docker..."
+    # This script will install any necessary dependencies for the platform
+    # On Debian, it will install it via Apt
     curl -fsSL get.docker.com -o get-docker.sh
     sudo sh get-docker.sh
     sudo usermod -aG docker "$USER"
     rm -f "get-docker.sh"
-fi
-
-# Install git-lfs
-# TODO: method to determine latest version
-if [ "$INSTALL_GITLFS" = true ] ; then
-    LFSVERSION="2.4.2"
-    echo "Downloading git-lfs $LFSVERSION..."
-    wget https://github.com/git-lfs/git-lfs/releases/download/v"$LFSVERSION"/git-lfs-linux-amd64-"$LFSVERSION".tar.gz
-    echo "Installing git-lfs $LFSVERSION..."
-    tar -C ./ -xf git-lfs-linux-amd64-"$LFSVERSION".tar.gz
-    rm -f git-lfs-linux-amd64-"$LFSVERSION".tar.gz
-    pushd ./git-lfs-"$LFSVERSION" > /dev/null
-    sudo ./install.sh
-    popd > /dev/null
-    rm -rf "./git-lfs-$LFSVERSION/"
 fi
 
 # Install Visual Studio Code. Skip if we're in WSL.
@@ -418,8 +408,10 @@ fi
 
 # Update the locate database
 echo "Updating the 'locate' database..."
-sudo updatedb
+sudo updatedb || echo "Failed to update the 'locate' database"
 
 # Install configs
-echo "Installing custom configurations (.bashrc, .gitconfig, etc.) ..."
-source ./configure.sh
+if [ "$INSTALL_CONFIGS" = true ] ; then
+    echo "Installing custom configurations (.bashrc, .gitconfig, etc.) ..."
+    . ./configure.sh
+fi
