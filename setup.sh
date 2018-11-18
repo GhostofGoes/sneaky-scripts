@@ -106,7 +106,7 @@ useful_tools=(
     'glances'   # Graphical resource monitoring tool
     'ncdu'      # Graphical view of directory sizes in terminal, using NCurses
     'direnv'    # Shell environment switcher (https://direnv.net/)
-    
+
     'locate'
     'xclip'     # Pipes input to the clipboard
     'unzip'
@@ -129,7 +129,7 @@ useful_tools=(
 
     'jq'        # Command line JSON tool (https://stedolan.github.io/jq/)
     'ripgrep'   # Recursive grep/find thing (https://github.com/BurntSushi/ripgrep)
-    'cppcheck'  # C++ static code analyzer (https://github.com/danmar/cppcheck) 
+    'cppcheck'  # C++ static code analyzer (https://github.com/danmar/cppcheck)
 )
 
 gui_tools=(
@@ -172,7 +172,7 @@ apt_packages=(
 # TODO: only install common programs if they're not already installed
 #   ssh, locate, zip, unzip, curl, wget, nano, grep, sed
 
-# Graphical apps: 
+# Graphical apps:
 #   Gedit, PyCharm, browsers, DB Browser for SQL, Remmina (RDP client)
 #   Private Internet Access (PIA), KeePass, Steam, Spotify, VLC player, TexWorks/TexStudio, Dropbox
 #   VirtualBox, VMware, Discord
@@ -247,7 +247,7 @@ elif [ $RHEL ]; then
 
     # Install packages
     sudo yum install -y -qq ShellCheck
-    sudo yum install -y -qq geoip  # geoiplookup 
+    sudo yum install -y -qq geoip  # geoiplookup
 
     # TODO: this will probably fail on many of these
     echo "Installing various useful tools..."
@@ -266,7 +266,7 @@ elif [ $FEDORA ]; then
     echo "Running setup for Fedora, the OS we all wish we could run if everyone wasn't Debian-obscessed."
     echo "Refreshing dnf package cache and updating existing packages..."
     dnf check-update -y -qq
-    sudo dnf upgrade -y -qq 
+    sudo dnf upgrade -y -qq
 
     # Install packages
     sudo dnf install -y -qq ShellCheck
@@ -288,7 +288,7 @@ elif [ $FEDORA ]; then
 elif [ $SUSE ]; then
     echo "Running setup for OpenSUSE. Let's do science! That's what OpenSUSE is for, right? ...right?"
     ## NOTE: I don't use this yet, but might, so putting anything useful here for now
-    
+
     # Refresh package cache and update packages
     echo "Refreshing zypper package cache and updating existing packages..."
     sudo zypper --non-interactive --quiet --ignore-unknown refresh
