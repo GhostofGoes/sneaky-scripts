@@ -21,6 +21,7 @@ $scripts = @(
     "configure_colors",
     "set_variables.ps1",
     "install_scoop",
+    "install_scoop_packages",
     "install_pshazz",
     "install_chocolatey",
     "install_choco_packages"

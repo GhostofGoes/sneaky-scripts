@@ -1,4 +1,5 @@
-
+# TODO: make source profile path configurable with an argument
+# TODO: move to commands? ("Configure-PowerShellProfile" or something)
 if (!(Test-Path $profile.CurrentUserAllHosts)) {
     Write-Host -ForegroundColor DarkGreen "Copying profile to profile.CurrentUserAllHosts ($profile.CurrentUserAllHosts)"
     Copy-Item -Path "$(Split-Path -Parent $PSScriptRoot)\Configurations\profile.ps1" -Destination $profile.CurrentUserAllHosts
