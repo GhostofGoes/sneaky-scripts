@@ -19,6 +19,7 @@ $scriptDir = Resolve-Path "$PSScriptRoot\Scripts"
 $scripts = @(
     "configure_profile",
     "configure_colors",
+    "set_variables.ps1",
     "install_scoop",
     "install_pshazz",
     "install_chocolatey",
@@ -58,10 +59,3 @@ if ([System.Environment]::OSVersion.Version.Major -eq "10") {
     Write-Host -ForegroundColor DarkGreen "Win10.ps1 finished! (Presets were loaded from: $presetsFile)"
     Write-Host -ForegroundColor Yellow "You must reboot before some of the configurations will be active!"
 }
-
-# Enable better_exceptions: https://github.com/qix-/better-exceptions#usage
-setx BETTER_EXCEPTIONS 1
-
-# Nicer CMD prompt
-# Source: http://www.hanselman.com/blog/ABetterPROMPTForCMDEXEOrCoolPromptEnvironmentVariablesAndANiceTransparentMultiprompt.aspx
-setx prompt "[%computername%] $d$s$t$_$p$_$_$+$g"
