@@ -1,0 +1,57 @@
+# Editors
+notepadplusplus.install  # Notepad++
+visualstudiocode         # Visual Studio Code
+# sublimetext3           # Sublime Text 3
+pycharm-community
+
+# Browsers
+googlechrome # Google Chrome
+firefox      # Mozilla Firefox
+# chromium    # Open-source version of Chrome
+
+# Runtimes/Programming Languages
+jre8     # Java SE Runtime Environment 8
+jdk8     # Java JDK 8
+ruby     # Ruby programming language
+python3  # Python programming language
+python2  # Old Python
+golang   # Go programming language
+miktex.install  # LaTeX
+
+# Utilities
+ccleaner         # CCleaner - Windows cleaning tool
+sysinternals     # Windows Sysinternals - troubleshooting utilities
+7zip.install     # 7-zip - file compression utility
+procexp          # Process Explorer
+keepass.install  # KeePass - password manager
+greenshot        # Light-weight screenshot tool
+qbittorrent
+spotify
+revo.uninstaller
+cpu-z
+veracrypt
+# ilspy  # ILSpy is the open-source .NET assembly browser and decompiler
+signal  # Secure messaging
+
+# Commandline tools
+# hub         # GitHub hub (https://github.com/github/hub)
+# curl        # curl command
+# wget        # wget command
+youtube-dl  # Small command-line program to download videos from YouTube.com and a few more sites
+# cmder        # Terminal emulator
+
+# Viewers/Media
+vlc        # VLC media player
+irfanview  # IrfanView - Image viewer
+
+# Virtualization/Emulation
+virtualbox
+vagrant
+# docker
+
+# Network tools
+putty.install  # PuTTY - Telnet/SSH client
+filezilla      # FileZilla - FTP/SFTP client
+winscp         # WinSCP - SFTP/SCP/FTP client
+wireshark      # Wireshark - Packet capture and analysis
+nmap
