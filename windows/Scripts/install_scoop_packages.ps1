@@ -7,17 +7,19 @@ Write-Host -ForegroundColor DarkGreen "Installing 'aria2' package to speed up Sc
 scoop install aria2 sudo
 
 # More packages of interest:
-# Langs:    python ruby perl go dotnet dotnet-sdk haskell latex
-# Network:  nmap wireshark hashcat
+# Langs:    python ruby perl go dotnet dotnet-sdk haskell latex pypy2
+# Network:  nmap wireshark hashcat putty
 # VMs:      packer vagrant qemu busybox docker-compose docker aws
 # DBs:      postgresql mysql rethinkdb
-# Misc:     gnupg gitlab-runner dd msys2 cygwin autoit jetbrains-toolbox which speedfan
-# CPP:      gcc gdb cppcheck cmake
+# Fancy:    posh-git
+# Misc:     gnupg gitlab-runner dd msys2 cygwin autoit  which speedfan youtube-dl-gui
+# Dev:      postman gcc gdb cppcheck cmake plantuml
+# Editors:  jetbrains-toolbox pycharm vscode atom notepadplusplus notepad2 vimtutor vim
 $userPackages = @"
 openssh ssh-copy-id telnet curl wget netcat youtube-dl
 git git-lfs make gnupg aws concfg
 7zip gzip unzip tar dos2unix grep sed less touch 
-nano vim vimtutor jq time cloc shellcheck neofetch cowsay
+nano jq time cloc shellcheck neofetch cowsay
 "@
 $separator = " ","`n","`r`n"
 $userPackages = $userPackages.Split($separator, [System.StringSplitOptions]::RemoveEmptyEntries)
