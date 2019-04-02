@@ -127,9 +127,9 @@ useful_tools=(
     'cowsay'    # Moooo
     'neofetch'  # Nice pretty CLI output of system information
 
-    'jq'        # Command line JSON tool (https://stedolan.github.io/jq/)
-    'ripgrep'   # Recursive grep/find thing (https://github.com/BurntSushi/ripgrep)
-    'cppcheck'  # C++ static code analyzer (https://github.com/danmar/cppcheck)
+    'jq'          # Command line JSON tool (https://stedolan.github.io/jq/)
+    'ripgrep'     # Recursive grep/find thing (https://github.com/BurntSushi/ripgrep)
+    'cppcheck'    # C++ static code analyzer (https://github.com/danmar/cppcheck)
 )
 
 gui_tools=(
@@ -143,7 +143,7 @@ apt_packages=(
     'python3-pip'
     'python-pip'
     'build-essential'
-    'shellcheck'
+    'shellcheck'  # Bash static analyzer
     'net-tools'  # ipconfig, arp, etc.
     'geoip-bin'
     'gddrescue'  # ddrescue
@@ -391,19 +391,6 @@ fi
 # Install Visual Studio Code. Skip if we're in WSL.
 if [ "$INSTALL_VSCODE" = true ] && [ ! $WSL ] && [ "$(command -v code > /dev/null)" -eq 1 ] ; then
     install_vscode
-fi
-
-# Install Shellcheck
-if [ "$INSTALL_SHELLCHECK" = true ] ; then
-    echo "Compiling and installing the latest version of ShellCheck..."
-    install_package "cabal-install"
-    cabal update
-    git clone https://github.com/koalaman/shellcheck.git
-    pushd ./shellcheck/ > /dev/null
-    cabal install --enable-tests > /dev/null
-    popd > /dev/null
-    remove_package "shellcheck"
-    echo "Finished installing ShellCheck"
 fi
 
 # Update the locate database
