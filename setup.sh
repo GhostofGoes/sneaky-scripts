@@ -4,10 +4,15 @@
 # [ ] MAKE RE-RUNNABLE! If the desired configs already exist, don't append them again.
 # [ ] Configure proxy if set
 # [ ] Configure vscode
-# [ ] Configure PyCharm with desktop icon on Ubuntu (make sure .desktop file is configured on Ubuntu/Kali)
 # [ ] Raspberry Pi-specific setup
 # [ ] Configure Docker
-# [ ] Load script from a default named file, and/or file specified as argument
+# [ ] Load script configuration from a default named file, and/or file specified as argument
+# [ ] Read packages to install from a file
+# [ ] Publish releases with zipped versions of each OS's folders.
+#       So all I have to do is download the release .zip/.tar.gz file, uncompress it, and run the requisite install script (.ps1/.sh/.whatever).
+#       The releases zip: base files from top level, platform folders.
+# [ ] Build process prepends base_bashrc to all platform-specific bashrc files?
+# [ ] Make apps that are installed configurable via a JSON file or something.
 
 # Features
 #   Detect Ubuntu
@@ -26,10 +31,13 @@
 
 # Settings + Flags + Themes + Plugins/Extensions for graphical apps
 #   Chrome, Firefox, PyCharm, VScode, Gedit
-#   Set default editor
 
 # CLI/etc apps:
-#   LaTeX, Vagrant
+#   LaTeX
+#   Vagrant
+#   lazydocker
+#   pipenv
+#   pyenv
 
 # TODO:
 # ~/.curlrc
@@ -38,6 +46,14 @@
 # pyenv (not to be confused with pipenv)
 # pyenv-virtualenv and/or pyenv-virtualenvwrapper
 # virtualenvwrapper
+# Set sudo timeout to none (if in a VM or WSL)
+# Ubuntu
+#   Configure keyboard shortcuts (WIN+E, WIN+T, etc.)
+#   Set default editor
+#   Disable screen dim and sleep (if in a VM)
+#   Auto-hide dock
+#   Install Gnome Tweaks (via Snap?)
+#   Install wallpapers?
 
 
 # Source: https://unix.stackexchange.com/a/41735
