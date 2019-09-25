@@ -14,7 +14,9 @@ cat ./configs/bashrc >> ~/.bashrc
 cat ./configs/ssh_config >> ~/.ssh/config
 chmod 644 ~/.ssh/config
 
-sudo chown "$USER":"$USER" ~/.gitconfig
+if [ -f ~/.gitconfig ]; then
+    sudo chown "$USER":"$USER" ~/.gitconfig
+fi
 cat ./configs/gitconfig >> ~/.gitconfig
 
 if [ $WSL ] ; then

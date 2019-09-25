@@ -1,5 +1,45 @@
 #!/usr/bin/env bash
 
+# TODO List:
+# [ ] MAKE RE-RUNNABLE! If the desired configs already exist, don't append them again.
+# [ ] Configure proxy if set
+# [ ] Configure vscode
+# [ ] Configure PyCharm with desktop icon on Ubuntu (make sure .desktop file is configured on Ubuntu/Kali)
+# [ ] Raspberry Pi-specific setup
+# [ ] Configure Docker
+# [ ] Load script from a default named file, and/or file specified as argument
+
+# Features
+#   Detect Ubuntu
+#   Detect pacman (Arch, MSYS)
+
+# TODO: cleanup the output and messages
+# TODO: JSON/txt file with apps?
+
+# TODO: only install common programs if they're not already installed
+#   ssh, locate, zip, unzip, curl, wget, nano, grep, sed
+
+# Graphical apps:
+#   Browsers, DB Browser for SQL, Remmina (RDP client)
+#   Private Internet Access (PIA), KeePass, Steam, Spotify, VLC player, TexWorks/TexStudio, Dropbox
+#   VirtualBox, VMware, Discord
+
+# Settings + Flags + Themes + Plugins/Extensions for graphical apps
+#   Chrome, Firefox, PyCharm, VScode, Gedit
+#   Set default editor
+
+# CLI/etc apps:
+#   LaTeX, Vagrant
+
+# TODO:
+# ~/.curlrc
+# ~/.wgetrc
+# Terminator config (Example: https://gist.github.com/starenka/1709840)
+# pyenv (not to be confused with pipenv)
+# pyenv-virtualenv and/or pyenv-virtualenvwrapper
+# virtualenvwrapper
+
+
 # Source: https://unix.stackexchange.com/a/41735
 os_type() {
 case $(uname) in
@@ -21,14 +61,18 @@ esac
 
 # Install Visual Studio Code (https://code.visualstudio.com/docs/setup/linux)
 install_vscode() {
-    echo "Installing VScode..."
-    if [ $DEBIAN ] ; then
+    if [ "$(command -v snap > /dev/null)" -eq 0 ]; then
+        echo "Installing VScode via Snap..."
+        sudo snap install code --classic
+    elif [ $DEBIAN ] ; then
+        echo "Installing VScode via the Apt package..."
         curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
         sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
         sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
         sudo apt-get update -y -qq
         sudo apt-get install -y -qq code # Change this to "code-insiders" if you like to live on the bleeding edge
     elif [ "$(command -v rpm > /dev/null)" -eq 0 ] ; then
+        echo "Installing VScode via the RPM package..."
         sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
         if [ ! $SUSE ] ; then
             sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
@@ -150,56 +194,19 @@ apt_packages=(
     'apt-transport-https'
     'ca-certificates'
     'software-properties-common'  # Needed for Docker
+    'golang'
 )
 
-
-# TODO List:
-# [ ] MAKE RE-RUNNABLE! If the desired configs already exist, don't append them again.
-# [ ] Configure proxy if set
-# [ ] Configure vscode
-# [ ] Configure PyCharm with desktop icon on Ubuntu (make sure .desktop file is configured on Ubuntu/Kali)
-# [ ] Raspberry Pi-specific setup
-# [ ] Configure Docker
-# [ ] Timezone configuration
-
-# Features
-#   Detect Ubuntu
-#   Detect pacman (Arch, MSYS)
-
-# TODO: cleanup the output and messages
-# TODO: JSON/txt file with apps?
-
-# TODO: only install common programs if they're not already installed
-#   ssh, locate, zip, unzip, curl, wget, nano, grep, sed
-
-# Graphical apps:
-#   Gedit, PyCharm, browsers, DB Browser for SQL, Remmina (RDP client)
-#   Private Internet Access (PIA), KeePass, Steam, Spotify, VLC player, TexWorks/TexStudio, Dropbox
-#   VirtualBox, VMware, Discord
-
-# Settings + Flags + Themes + Plugins/Extensions for graphical apps
-#   Chrome, Firefox, PyCharm, VScode
-
-# CLI/etc apps:
-#   LaTeX, Vagrant, golang
-
-# TODO:
-# ~/.curlrc
-# ~/.wgetrc
-# Terminator config (Example: https://gist.github.com/starenka/1709840)
-# pyenv (not to be confused with pipenv)
-# pyenv-virtualenv and/or pyenv-virtualenvwrapper
-# virtualenvwrapper
-
-# Script settings (TODO)
-#   Load from a default named file, and/or file specified as argument
+# Script settings
 TZ="Amercia/Denver"  # Pro tip: if you don't live in Arizona, don't use America/Phoenix. There be dragons.
+INSTALL_CONFIGS=false
+
+# Things to install
 INSTALL_PY3_PACKAGES=false
 INSTALL_PY2_PACKAGES=false
 INSTALL_VSCODE=false
 INSTALL_DOCKER=false
-# IS_VM=false
-INSTALL_CONFIGS=false
+INSTALL_PYCHARM=false
 
 # Profile the OS
 os_type
@@ -389,9 +396,20 @@ if [ "$INSTALL_DOCKER" = true ] && [ ! $WSL ] ; then
     rm -f "get-docker.sh"
 fi
 
+# Update snaps
+if [ "$(command -v snap > /dev/null)" -eq 0 ]; then
+    echo "Updating Snaps..."
+    sudo snap refresh
+fi
+
 # Install Visual Studio Code. Skip if we're in WSL.
 if [ "$INSTALL_VSCODE" = true ] && [ ! $WSL ] && [ "$(command -v code > /dev/null)" -eq 1 ] ; then
     install_vscode
+fi
+
+# Install PyCharm via Snap
+if [ "$INSTALL_PYCHARM" = true ] && [ ! $WSL ] && [ "$(command -v snap > /dev/null)" -eq 0 ]; then
+    sudo snap install pycharm-community --classic
 fi
 
 # Update the locate database
