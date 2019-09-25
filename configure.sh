@@ -19,11 +19,16 @@ cat ./configs/gitconfig >> ~/.gitconfig
 
 if [ $WSL ] ; then
     echo "Installing SSH key for WSL..."
-    cat ./configs/ssh_config >> "/mnt/c/Users/${WINUSER}/.ssh/config"
-    chmod 644 "/mnt/c/Users/${WINUSER}/.ssh/config"
+    if [ -d "/mnt/c" ] ; then
+        WINHOME="/mnt/c/Users/${WINUSER}"
+    elif [ -d "/c" ] ; then
+        WINHOME="/c/Users/${WINUSER}"
+    fi
+    cat ./configs/ssh_config >> "${WINHOME}/.ssh/config"
+    chmod 644 "${WINHOME}/.ssh/config"
 fi
 
-if [ $DEBIAN ] ; then
+if [ $DEBIAN ] && [ ! $WSL ] ; then
     echo "Attempting to disable lock screen... (Failures are ignored)"
     gsettings set org.gnome.desktop.lockdown disable-lock-screen 'true' 2> /dev/null || true
 fi

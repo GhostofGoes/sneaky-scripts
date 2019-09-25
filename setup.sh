@@ -190,16 +190,15 @@ apt_packages=(
 # pyenv (not to be confused with pipenv)
 # pyenv-virtualenv and/or pyenv-virtualenvwrapper
 # virtualenvwrapper
-# Compile and install latest version of shellcheck
 
 # Script settings (TODO)
-# Load from a default named file, and/or file specified as argument
+#   Load from a default named file, and/or file specified as argument
 TZ="Amercia/Denver"  # Pro tip: if you don't live in Arizona, don't use America/Phoenix. There be dragons.
-INSTALL_PY3_PACKAGES=true
+INSTALL_PY3_PACKAGES=false
 INSTALL_PY2_PACKAGES=false
-INSTALL_VSCODE=true
-INSTALL_DOCKER=true
-IS_VM=true
+INSTALL_VSCODE=false
+INSTALL_DOCKER=false
+# IS_VM=false
 INSTALL_CONFIGS=false
 
 # Profile the OS
@@ -351,7 +350,9 @@ if [ $WSL ] ; then
     WINUSER=$( whoami.exe | cut -d '\' -f2 | tr -d '[:space:]')
     export WINUSER
     if [ -d "/mnt/c" ] ; then
-        mkdir -pv "/mnt/c/Users/{$WINUSER}/.ssh/"
+        mkdir -pv "/mnt/c/Users/${WINUSER}/.ssh/"
+    elif [ -d "/c" ] ; then
+        mkdir -pv "/c/Users/${WINUSER}/.ssh/"
     fi
 fi
 
