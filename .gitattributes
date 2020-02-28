@@ -1,4 +1,4 @@
-* text=auto
+* text=auto eol=lf
 
 # Linux
 *.bash text eol=lf
@@ -13,6 +13,10 @@ ssh_config  text eol=lf
 *.ps1 text eol=crlf
 *.cmd text eol=crlf
 *.preset text eol=crlf
+
+# https://code.visualstudio.com/docs/remote/troubleshooting#_resolving-git-line-ending-issues-in-wsl-resulting-in-many-modified-files
+*.{cmd,[cC][mM][dD]} text eol=crlf
+*.{bat,[bB][aA][tT]} text eol=crlf
 
 # General
 *.py    text eol=lf
